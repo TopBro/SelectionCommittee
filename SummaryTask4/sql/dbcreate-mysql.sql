@@ -1,6 +1,8 @@
 
 DROP TABLE registrations;
-DROP TABLE marks;
+DROP TABLE certificate_marks;
+DROP TABLE vno_marks;
+DROP TABLE enrollees;
 DROP TABLE users;
 DROP TABLE faculties;
 DROP TABLE statuses;
@@ -65,7 +67,19 @@ CREATE TABLE users(
 
 	id SERIAL,
 	login VARCHAR(10) NOT NULL UNIQUE,
-	password VARCHAR(10) NOT NULL,
+	password VARCHAR(10) NOT NULL,	
+	role_id INTEGER NOT NULL,
+	PRIMARY KEY (id),	
+	FOREIGN KEY (role_id) REFERENCES roles(id)
+	ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE InnoDB CHARACTER SET utf8;
+
+INSERT INTO users VALUES(DEFAULT, 'admin', 'admin', 1);
+	
+CREATE TABLE enrollees(
+
+	id SERIAL,
+	user_id BIGINT UNSIGNED NOT NULL,
 	first_name VARCHAR(20) NOT NULL,
 	middle_name VARCHAR(20) NOT NULL,
 	last_name VARCHAR(20) NOT NULL,
@@ -73,39 +87,41 @@ CREATE TABLE users(
 	city VARCHAR(20) NOT NULL,
 	region VARCHAR(20) NOT NULL,
 	education VARCHAR(20) NOT NULL,	
-	state_id INTEGER NOT NULL,
-	role_id INTEGER NOT NULL,
+	state_id INTEGER NOT NULL,	
 	PRIMARY KEY (id),
-	FOREIGN KEY (state_id) REFERENCES states(id)
+	FOREIGN KEY (user_id) REFERENCES users(id)
 	ON DELETE RESTRICT ON UPDATE CASCADE,
-	FOREIGN KEY (role_id) REFERENCES roles(id)
-	ON DELETE RESTRICT ON UPDATE CASCADE
+	FOREIGN KEY (state_id) REFERENCES states(id)
+	ON DELETE RESTRICT ON UPDATE CASCADE	
 ) ENGINE InnoDB CHARACTER SET utf8;
-	
-INSERT INTO users VALUES(DEFAULT, 'admin', 'admin', 'Иван', 'Иванович', 'Иванов', 'best_admin@gmail.com', 'Харьков', 'Харьковская', 'ХНУРЭ', 1, 1);
 
-
-CREATE TABLE marks(
+CREATE TABLE vno_marks(
 
 	id SERIAL,
 	user_id BIGINT UNSIGNED NOT NULL,
 	ukrainian INTEGER UNSIGNED NOT NULL,
 	mathematics INTEGER UNSIGNED NOT NULL,
-	physics INTEGER UNSIGNED NOT NULL,
+	physics INTEGER UNSIGNED NOT NULL,		
+	PRIMARY KEY (id),	
+	FOREIGN KEY (user_id) REFERENCES users(id)
+	ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE InnoDB CHARACTER SET utf8;
+
+CREATE TABLE certificate_marks(
+
+	id SERIAL,
+	user_id BIGINT UNSIGNED NOT NULL,	
 	literature INTEGER UNSIGNED NOT NULL,
 	history INTEGER UNSIGNED NOT NULL,
 	english INTEGER UNSIGNED NOT NULL,
 	informatics INTEGER UNSIGNED NOT NULL,
 	geography INTEGER UNSIGNED NOT NULL,
 	biology INTEGER UNSIGNED NOT NULL,
-	chemistry INTEGER UNSIGNED NOT NULL,
-	vno_sum INTEGER UNSIGNED NOT NULL,
-	other_sum INTEGER UNSIGNED NOT NULL,	
+	chemistry INTEGER UNSIGNED NOT NULL,	
 	PRIMARY KEY (id),	
 	FOREIGN KEY (user_id) REFERENCES users(id)
 	ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE InnoDB CHARACTER SET utf8;
-
 
 CREATE TABLE registrations(
 
