@@ -1,4 +1,4 @@
-package ua.nure.zhabin.SummaryTask4.db.DAO;
+package ua.nure.zhabin.SummaryTask4.db;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -14,7 +14,7 @@ public class ConnectionPool {
 	private ConnectionPool() {
 		try {
 			InitialContext ic = new InitialContext();
-			dataSource = (DataSource) ic.lookup("java:/comp/env/jdbc/st4");
+			dataSource = (DataSource) ic.lookup("java:/comp/env/jdbc/summary4");
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("DataSource not found");

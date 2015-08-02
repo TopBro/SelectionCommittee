@@ -1,4 +1,4 @@
-package ua.nure.zhabin.SummaryTask4.db.DAO;
+package ua.nure.zhabin.SummaryTask4.db.dao;
 
 import java.util.List;
 

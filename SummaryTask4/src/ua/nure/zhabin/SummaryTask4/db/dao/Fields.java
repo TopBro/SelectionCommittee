@@ -1,4 +1,4 @@
-package ua.nure.zhabin.SummaryTask4.db.DAO;
+package ua.nure.zhabin.SummaryTask4.db.dao;
 
 /**
  * Holder for fields names of DB tables and beans.

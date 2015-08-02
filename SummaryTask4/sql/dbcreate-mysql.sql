@@ -42,7 +42,7 @@ CREATE TABLE statuses(
 INSERT INTO statuses VALUES(1, 'waiting');
 INSERT INTO statuses VALUES(2, 'budget');
 INSERT INTO statuses VALUES(3, 'contract');
-INSERT INTO statuses VALUES(4, 'not enrolled');
+INSERT INTO statuses VALUES(4, 'not_enrolled');
 
 
 CREATE TABLE faculties(

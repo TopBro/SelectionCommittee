@@ -1,14 +1,13 @@
-package ua.nure.zhabin.SummaryTask4.db.DAO;
+package ua.nure.zhabin.SummaryTask4.db.dao;
 
 import java.sql.SQLException;
 
+import ua.nure.zhabin.SummaryTask4.db.ConnectionPool;
+
 public abstract class DAOFactory {
-	
-	public static final int MYSQL = 1;
 	
 	public abstract ConnectionPool getConnectionPool() throws SQLException;
 	 
-	public abstract CourseDAO getCourseDAO(ConnectionPool pool);	
-	public abstract TopicDAO getTopicDAO(ConnectionPool pool);
+	public abstract FacultyDAO getCourseDAO(ConnectionPool pool);	
 	public abstract UserDAO getUserDAO(ConnectionPool pool);	
 }
