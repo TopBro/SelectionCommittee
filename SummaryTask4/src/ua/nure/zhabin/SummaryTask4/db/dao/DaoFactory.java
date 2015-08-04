@@ -4,10 +4,10 @@ import java.sql.SQLException;
 
 import ua.nure.zhabin.SummaryTask4.db.ConnectionPool;
 
-public abstract class DAOFactory {
+public abstract class DaoFactory {
 	
 	public abstract ConnectionPool getConnectionPool() throws SQLException;
 	 
-	public abstract FacultyDAO getCourseDAO(ConnectionPool pool);	
-	public abstract UserDAO getUserDAO(ConnectionPool pool);	
+	public abstract FacultyDao getCourseDAO(ConnectionPool pool);	
+	public abstract UserDao getUserDAO(ConnectionPool pool);	
 }

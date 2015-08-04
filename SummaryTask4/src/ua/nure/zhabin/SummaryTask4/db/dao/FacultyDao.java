@@ -6,7 +6,7 @@ import java.util.List;
 
 import ua.nure.zhabin.SummaryTask4.db.entity.Faculty;
 
-public interface FacultyDAO {
+public interface FacultyDao {
 	
 	public int insertCourse();
 	public boolean deleteCourse();	

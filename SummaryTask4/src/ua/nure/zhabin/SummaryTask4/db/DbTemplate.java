@@ -9,12 +9,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import ua.nure.zhabin.SummaryTask4.db.DBUtil;
+import ua.nure.zhabin.SummaryTask4.db.DbUtil;
 import ua.nure.zhabin.SummaryTask4.db.extractor.Extractor;
 
-public class DBTemplate<E> {
+public class DbTemplate<E> {
 	
-	private static final Logger LOG = Logger.getLogger(DBTemplate.class);
+	private static final Logger LOG = Logger.getLogger(DbTemplate.class);
 	
 	public List<E> getAll(Connection connection, String sql, Extractor<E> extractor) {
 		PreparedStatement ps = null;
@@ -30,8 +30,8 @@ public class DBTemplate<E> {
 		} catch (SQLException e) {
 			LOG.error("Cannot obtain objects!", e);
 		} finally {
-			DBUtil.close(ps);
-			DBUtil.close(rs);
+			DbUtil.close(ps);
+			DbUtil.close(rs);
 		}
 		return list;
 	}
@@ -50,8 +50,8 @@ public class DBTemplate<E> {
 		} catch (SQLException e) {
 			LOG.error("Cannot obtain object!", e);
 		} finally {
-			DBUtil.close(ps);
-			DBUtil.close(rs);
+			DbUtil.close(ps);
+			DbUtil.close(rs);
 		}
 		return object;
 	}
@@ -70,8 +70,8 @@ public class DBTemplate<E> {
 		} catch (SQLException e) {
 			LOG.error("Cannot obtain object!", e);
 		} finally {
-			DBUtil.close(ps);
-			DBUtil.close(rs);
+			DbUtil.close(ps);
+			DbUtil.close(rs);
 		}
 		return object;
 	}
@@ -95,8 +95,8 @@ public class DBTemplate<E> {
 		} catch (SQLException e) {
 			LOG.error("Cannot obtain objects!", e);
 		} finally {
-			DBUtil.close(ps);
-			DBUtil.close(rs);
+			DbUtil.close(ps);
+			DbUtil.close(rs);
 		}
 		return list;
 	}	
@@ -112,7 +112,7 @@ public class DBTemplate<E> {
 		} catch (SQLException e) {
 			LOG.error("Cannot obtain object!", e);
 		} finally {
-			DBUtil.close(ps);
+			DbUtil.close(ps);
 		}
 	}
 	
