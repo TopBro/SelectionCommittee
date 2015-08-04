@@ -7,6 +7,7 @@ public class RegistrationRecord extends Entity {
 	private int userId;
 	private int facultyId;
 	private int statusId;
+	
 	public int getUserId() {
 		return userId;
 	}

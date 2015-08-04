@@ -12,9 +12,9 @@ import org.apache.log4j.Logger;
 import ua.nure.zhabin.SummaryTask4.db.DbUtil;
 import ua.nure.zhabin.SummaryTask4.db.extractor.Extractor;
 
-public class DbTemplate<E> {
+public class JdbcTemplate<E> {
 	
-	private static final Logger LOG = Logger.getLogger(DbTemplate.class);
+	private static final Logger LOG = Logger.getLogger(JdbcTemplate.class);
 	
 	public List<E> getAll(Connection connection, String sql, Extractor<E> extractor) {
 		PreparedStatement ps = null;
@@ -36,13 +36,15 @@ public class DbTemplate<E> {
 		return list;
 	}
 	
-	public E get(Connection connection, String sql, Extractor<E> extractor, int i) {
+	public E get(Connection connection, String sql, Object[] arr, Extractor<E> extractor) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		E object = null;
 		try {
 			ps = connection.prepareStatement(sql);
-			ps.setInt(1, i);
+			for (int i = 0; i < arr.length; i++) {
+				ps.setObject(i + 1, arr[i]);
+			}
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				object = extractor.extract(rs);
@@ -56,26 +58,6 @@ public class DbTemplate<E> {
 		return object;
 	}
 	
-	public E get(Connection connection, String sql, Extractor<E> extractor, String s) {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		E object = null;
-		try {
-			ps = connection.prepareStatement(sql);
-			ps.setString(1, s);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				object = extractor.extract(rs);
-			}
-		} catch (SQLException e) {
-			LOG.error("Cannot obtain object!", e);
-		} finally {
-			DbUtil.close(ps);
-			DbUtil.close(rs);
-		}
-		return object;
-	}
-
 	public List<E> getAllByParameter(Connection connection, Parameter parameter,
 			Extractor<E> extractor) {
 		PreparedStatement ps = null;
