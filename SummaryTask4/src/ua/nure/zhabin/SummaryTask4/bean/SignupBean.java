@@ -1,10 +1,13 @@
-package ua.nure.zhabin.SummaryTask4.db.entity;
+package ua.nure.zhabin.SummaryTask4.bean;
 
-public class Enrollee extends Entity {
+import java.io.Serializable;
 
-	private static final long serialVersionUID = 3716801639958125064L;
-	
-	private String userId;
+public class SignupBean implements Serializable {
+
+	private static final long serialVersionUID = -5376583717719910569L;
+
+	private String login;	
+	private String password;
 	private String firstName;
 	private String midleName;
 	private String lastName;
@@ -12,13 +15,18 @@ public class Enrollee extends Entity {
 	private String city;
 	private String region;
 	private String education;
-	private int stateId;
 	
-	public String getUserId() {
-		return userId;
+	public String getLogin() {
+		return login;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -61,20 +69,5 @@ public class Enrollee extends Entity {
 	}
 	public void setEducation(String education) {
 		this.education = education;
-	}
-	public int getStateId() {
-		return stateId;
-	}
-	public void setStateId(int stateId) {
-		this.stateId = stateId;
-	}
-	
-	@Override
-	public String toString() {
-		return "Enrollee [userId=" + userId + ", firstName=" + firstName
-				+ ", midleName=" + midleName + ", lastName=" + lastName
-				+ ", email=" + email + ", city=" + city + ", region=" + region
-				+ ", education=" + education + ", stateId=" + stateId
-				+ ", getId()=" + getId() + "]";
 	}	
 }

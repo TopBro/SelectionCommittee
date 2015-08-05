@@ -1,4 +1,4 @@
-package ua.nure.zhabin.SummaryTask4.db.extractor;
+package ua.nure.zhabin.SummaryTask4.db.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import ua.nure.zhabin.SummaryTask4.db.Fields;
 import ua.nure.zhabin.SummaryTask4.db.entity.User;
 
-public class UserExtractor implements Extractor<User> {
+public class UserMapper implements Mapper<User> {
 
 	@Override
 	public User extract(ResultSet rs) throws SQLException {

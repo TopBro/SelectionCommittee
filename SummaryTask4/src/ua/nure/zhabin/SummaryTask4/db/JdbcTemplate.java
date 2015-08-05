@@ -10,13 +10,13 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import ua.nure.zhabin.SummaryTask4.db.DbUtil;
-import ua.nure.zhabin.SummaryTask4.db.extractor.Extractor;
+import ua.nure.zhabin.SummaryTask4.db.mapper.Mapper;
 
 public class JdbcTemplate<E> {
 	
 	private static final Logger LOG = Logger.getLogger(JdbcTemplate.class);
 	
-	public List<E> getAll(Connection connection, String sql, Extractor<E> extractor) {
+	public List<E> getAll(Connection connection, String sql, Mapper<E> extractor) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		List<E> list = new ArrayList<>();
@@ -36,7 +36,7 @@ public class JdbcTemplate<E> {
 		return list;
 	}
 	
-	public E get(Connection connection, String sql, Object[] arr, Extractor<E> extractor) {
+	public E get(Connection connection, String sql, Object[] arr, Mapper<E> extractor) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		E object = null;
@@ -59,7 +59,7 @@ public class JdbcTemplate<E> {
 	}
 	
 	public List<E> getAllByParameter(Connection connection, Parameter parameter,
-			Extractor<E> extractor) {
+			Mapper<E> extractor) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		List<E> list = new ArrayList<>();

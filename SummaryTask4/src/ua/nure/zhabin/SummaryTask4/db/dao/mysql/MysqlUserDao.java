@@ -1,10 +1,11 @@
-package ua.nure.zhabin.SummaryTask4.db.dao;
+package ua.nure.zhabin.SummaryTask4.db.dao.mysql;
 
 import java.sql.Connection;
 
 import ua.nure.zhabin.SummaryTask4.db.JdbcTemplate;
+import ua.nure.zhabin.SummaryTask4.db.dao.UserDao;
 import ua.nure.zhabin.SummaryTask4.db.entity.User;
-import ua.nure.zhabin.SummaryTask4.db.extractor.UserExtractor;
+import ua.nure.zhabin.SummaryTask4.db.mapper.UserMapper;
 
 public class MysqlUserDao implements UserDao {
 	
@@ -20,12 +21,12 @@ public class MysqlUserDao implements UserDao {
 
 	@Override
 	public User get(int id, Connection connection) {
-		return dbTemplate.get(connection, GET_USER_BY_ID, new Object[] {id}, new UserExtractor());
+		return dbTemplate.get(connection, GET_USER_BY_ID, new Object[] {id}, new UserMapper());
 	}
 
 	@Override
 	public User get(String login, Connection connection) {
-		return dbTemplate.get(connection, GET_USER_BY_ID, new Object[] {login}, new UserExtractor());
+		return dbTemplate.get(connection, GET_USER_BY_LOGIN, new Object[] {login}, new UserMapper());
 	}
 
 	@Override
