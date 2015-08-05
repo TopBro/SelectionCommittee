@@ -83,7 +83,7 @@ public class JdbcTemplate<E> {
 		return list;
 	}	
 	
-	public void add(Connection connection, String sql, Object[] arr) {
+	public void update(Connection connection, String sql, Object[] arr) {
 		PreparedStatement ps = null;
 		try {
 			ps = connection.prepareStatement(sql);

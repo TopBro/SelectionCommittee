@@ -13,25 +13,25 @@ public class MysqlUserDao implements UserDao {
 	private static final String GET_USER_BY_LOGIN = "Select * from Users where login = ?";
 	private static final String ADD_USER = "Insert into Users values(default, ?, ?, ?)";
 	
-	private JdbcTemplate<User> dbTemplate;
+	private JdbcTemplate<User> jdbcTemplate;
 	
 	public MysqlUserDao() {
-		dbTemplate = new JdbcTemplate<>();
+		jdbcTemplate = new JdbcTemplate<>();
 	}
 
 	@Override
 	public User get(int id, Connection connection) {
-		return dbTemplate.get(connection, GET_USER_BY_ID, new Object[] {id}, new UserMapper());
+		return jdbcTemplate.get(connection, GET_USER_BY_ID, new Object[] {id}, new UserMapper());
 	}
 
 	@Override
 	public User get(String login, Connection connection) {
-		return dbTemplate.get(connection, GET_USER_BY_LOGIN, new Object[] {login}, new UserMapper());
+		return jdbcTemplate.get(connection, GET_USER_BY_LOGIN, new Object[] {login}, new UserMapper());
 	}
 
 	@Override
 	public void add(User user, Connection connection) {
-		dbTemplate.add(connection, ADD_USER, new Object[] {user.getId(), user.getLogin(),
+		jdbcTemplate.update(connection, ADD_USER, new Object[] {user.getLogin(),
 				user.getPassword(), user.getRoleId()});
 	}
 }

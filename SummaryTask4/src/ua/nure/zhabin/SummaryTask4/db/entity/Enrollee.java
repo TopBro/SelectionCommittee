@@ -4,7 +4,7 @@ public class Enrollee extends Entity {
 
 	private static final long serialVersionUID = 3716801639958125064L;
 	
-	private String userId;
+	private long userId;
 	private String firstName;
 	private String midleName;
 	private String lastName;
@@ -14,10 +14,10 @@ public class Enrollee extends Entity {
 	private String education;
 	private int stateId;
 	
-	public String getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 	public String getFirstName() {
