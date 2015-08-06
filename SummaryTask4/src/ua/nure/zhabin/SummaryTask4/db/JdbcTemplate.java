@@ -98,5 +98,26 @@ public class JdbcTemplate<E> {
 		}
 	}
 	
-	
+	public long createUser(Connection connection, String sql, Object[] arr) {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		long key = 0;
+		try {
+			ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+			for (int i = 0; i < arr.length; i++) {
+				ps.setObject(i + 1, arr[i]);
+			}
+			ps.executeUpdate();
+			rs = ps.getGeneratedKeys();
+			if (rs != null && rs.next()) {
+			    key = rs.getLong(1);
+			}
+		} catch (SQLException e) {
+			LOG.error("Cannot obtain object!", e);
+		} finally {
+			DbUtil.close(ps);
+			DbUtil.close(rs);
+		}
+		return key;
+	}
 }

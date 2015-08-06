@@ -30,8 +30,8 @@ public class MysqlUserDao implements UserDao {
 	}
 
 	@Override
-	public void add(User user, Connection connection) {
-		jdbcTemplate.update(connection, ADD_USER, new Object[] {user.getLogin(),
+	public long add(User user, Connection connection) {
+		return jdbcTemplate.createUser(connection, ADD_USER, new Object[] {user.getLogin(),
 				user.getPassword(), user.getRoleId()});
 	}
 }

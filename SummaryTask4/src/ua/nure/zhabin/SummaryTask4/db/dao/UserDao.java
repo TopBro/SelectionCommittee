@@ -8,5 +8,5 @@ public interface UserDao {
 
 	User get(int id, Connection connection);
 	User get(String login, Connection connection);
-	void add(User user, Connection connection);	
+	long add(User user, Connection connection);	
 }
