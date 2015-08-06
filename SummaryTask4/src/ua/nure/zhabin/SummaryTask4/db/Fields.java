@@ -7,6 +7,12 @@ package ua.nure.zhabin.SummaryTask4.db;
  * 
  */
 public final class Fields {
+	
+	public static final int ADMIN_ROLE = 1;
+	public static final int ENROLLEE_ROLE = 2;
+	
+	public static final int ACTIVE_STATE = 1;
+	public static final int BLOCKED_STATE = 2;
 		
 	public static final String ENTITY_ID = "id";
 	
