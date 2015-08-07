@@ -7,6 +7,7 @@ public class Faculty extends Entity {
 	private String name;
 	private int budget;
 	private int contract;
+	
 	public String getName() {
 		return name;
 	}

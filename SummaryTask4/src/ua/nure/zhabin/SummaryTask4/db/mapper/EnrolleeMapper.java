@@ -3,6 +3,7 @@ package ua.nure.zhabin.SummaryTask4.db.mapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import ua.nure.zhabin.SummaryTask4.bean.SignupBean;
 import ua.nure.zhabin.SummaryTask4.db.Fields;
 import ua.nure.zhabin.SummaryTask4.db.entity.Enrollee;
 
@@ -21,6 +22,20 @@ public class EnrolleeMapper implements Mapper<Enrollee> {
 		enrollee.setRegion(rs.getString(Fields.ENROLLEE_REGION));
 		enrollee.setEducation(rs.getString(Fields.ENROLLEE_EDUCATION));
 		enrollee.setStateId(rs.getInt(Fields.ENROLLEE_STATE_ID));
+		return enrollee;
+	}
+
+	@Override
+	public Enrollee extract(SignupBean signupBean) {
+		Enrollee enrollee = new Enrollee();
+		enrollee.setFirstName(signupBean.getFirstName());
+		enrollee.setMidleName(signupBean.getMidleName());
+		enrollee.setLastName(signupBean.getLastName());
+		enrollee.setEmail(signupBean.getEmail());
+		enrollee.setCity(signupBean.getCity());
+		enrollee.setRegion(signupBean.getRegion());
+		enrollee.setEducation(signupBean.getEducation());
+		enrollee.setStateId(Fields.ACTIVE_STATE);
 		return enrollee;
 	}
 }

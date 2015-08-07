@@ -1,7 +1,9 @@
 package ua.nure.zhabin.SummaryTask4.db.dao;
 
-public interface MarksDao {
+import java.sql.Connection;
+
+public interface MarksDao<E> {
 	
-	void add();
+	void add(E marks, Connection connection);
 
 }
