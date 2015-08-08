@@ -30,4 +30,16 @@ public final class Fields {
 	public static final String ENROLLEE_EDUCATION = "education";
 	public static final String ENROLLEE_STATE_ID = "state_id";
 	
+	public static final String UKRAINIAN = "ukrainian";
+	public static final String MATHEMATICS = "mathematics";
+	public static final String PHYSICS = "physics";
+	public static final String LITERATURE = "literature";
+	public static final String HISTORY = "history";
+	public static final String ENGLISH = "english";
+	public static final String INFORMATICS = "informatics";
+	public static final String GEOGRAPHY = "geography";
+	public static final String BIOLOGY = "biology";
+	public static final String CHEMISTRY = "chemistry";
+	
+	
 }

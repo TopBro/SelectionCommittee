@@ -2,54 +2,56 @@ package ua.nure.zhabin.SummaryTask4.service;
 
 import java.sql.Connection;
 
-import org.omg.PortableServer.POAManagerPackage.State;
-
+import ua.nure.zhabin.SummaryTask4.Exception.MysqlRepositoryException;
 import ua.nure.zhabin.SummaryTask4.bean.SignupBean;
-import ua.nure.zhabin.SummaryTask4.db.ConnectionPool;
-import ua.nure.zhabin.SummaryTask4.db.Fields;
-import ua.nure.zhabin.SummaryTask4.db.dao.mysql.MysqlCertificateMarksDao;
-import ua.nure.zhabin.SummaryTask4.db.dao.mysql.MysqlEnrolleeDao;
-import ua.nure.zhabin.SummaryTask4.db.dao.mysql.MysqlUserDao;
-import ua.nure.zhabin.SummaryTask4.db.dao.mysql.MysqlVnoMarksDao;
+import ua.nure.zhabin.SummaryTask4.db.DbManager;
+import ua.nure.zhabin.SummaryTask4.db.dao.EnrolleeDao;
+import ua.nure.zhabin.SummaryTask4.db.dao.MarksDao;
+import ua.nure.zhabin.SummaryTask4.db.dao.UserDao;
+import ua.nure.zhabin.SummaryTask4.db.entity.CertificateMarks;
 import ua.nure.zhabin.SummaryTask4.db.entity.Enrollee;
 import ua.nure.zhabin.SummaryTask4.db.entity.User;
-import ua.nure.zhabin.SummaryTask4.db.mapper.EnrolleeMapper;
-import ua.nure.zhabin.SummaryTask4.db.mapper.UserMapper;
+import ua.nure.zhabin.SummaryTask4.db.entity.VnoMarks;
+import ua.nure.zhabin.SummaryTask4.util.SignupBeanExtractor;
 
 public class UserService {
 
-	private ConnectionPool pool;
-	private MysqlUserDao mysqlUserDao;
-	private MysqlEnrolleeDao mysqlEnrolleeDao;
-	private MysqlVnoMarksDao mysqlVnoMarksDao;
-	private MysqlCertificateMarksDao mysqlCertificateMarksDao;
-	private UserMapper userMapper;
-	private EnrolleeMapper enrolleeMapper;
+	private UserDao userDao;
+	private EnrolleeDao enrolleeDao;
+	private MarksDao<VnoMarks> vnoMarksDao;
+	private MarksDao<CertificateMarks> certificateMarksDao;
 	
-	public UserService() {
-		pool = ConnectionPool.getInstance();
-		mysqlUserDao = new MysqlUserDao();
-		mysqlEnrolleeDao = new MysqlEnrolleeDao();
-		mysqlEnrolleeDao = new MysqlEnrolleeDao();
-		mysqlVnoMarksDao = new MysqlVnoMarksDao();
-		mysqlCertificateMarksDao = new MysqlCertificateMarksDao();
-		userMapper = new UserMapper();
-		enrolleeMapper = new EnrolleeMapper();
+	public UserService(UserDao userDao, EnrolleeDao enrolleeDao, MarksDao<VnoMarks> vnoMarksDao,
+			MarksDao<CertificateMarks> certificateMarksDao) {
+		this.userDao = userDao;
+		this.enrolleeDao = enrolleeDao;
+		this.vnoMarksDao = vnoMarksDao;
+		this.certificateMarksDao = certificateMarksDao;
 	}
 	
 	public boolean isUserExist(String login) {
-		Connection con = pool.getConnection();
-		return mysqlUserDao.get(login, con) != null;
+		Connection con = DbManager.getConnection();
+		return userDao.get(login, con) != null;
 	}
 	
 	public void createUser(SignupBean signupBean) {
-		Connection con = pool.getConnection();
-		User user = userMapper.extract(signupBean);
-		Enrollee enrollee = enrolleeMapper.extract(signupBean);
-		
-		long userId = mysqlUserDao.add(user, con);		
-		enrollee.setUserId(userId);		
-		mysqlEnrolleeDao.add(enrollee, con);
-		
+		Connection con = DbManager.getConnection();
+		try {
+			User user = SignupBeanExtractor.extractUser(signupBean);
+			Enrollee enrollee = SignupBeanExtractor.extractEnrollee(signupBean);
+			VnoMarks vnoMarks = SignupBeanExtractor.extractVnoMarks(signupBean);
+			CertificateMarks certificateMarks = SignupBeanExtractor.extractCertificateMarks(signupBean);
+			long userId = userDao.add(user, con);		
+			enrollee.setUserId(userId);
+			vnoMarks.setUserId(userId);
+			certificateMarks.setUserId(userId);
+			enrolleeDao.add(enrollee, con);
+			vnoMarksDao.add(vnoMarks, con);
+			certificateMarksDao.add(certificateMarks, con);
+		} catch (MysqlRepositoryException mre) {
+			DbManager.rollback(con);
+		} finally {			
+			DbManager.close(con);
+		}		
 	}
 }

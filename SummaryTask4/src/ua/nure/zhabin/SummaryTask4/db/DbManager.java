@@ -1,17 +1,17 @@
 package ua.nure.zhabin.SummaryTask4.db;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-public class ConnectionPool {
+public class DbManager {
 	
-	private static ConnectionPool pool = null;
-	private static DataSource dataSource = null;
-	
-	private ConnectionPool() {
+	private static DataSource getDataSource() {
+		DataSource dataSource = null;
 		try {
 			InitialContext ic = new InitialContext();
 			dataSource = (DataSource) ic.lookup("java:/comp/env/jdbc/summary4");
@@ -19,27 +19,42 @@ public class ConnectionPool {
 			e.printStackTrace();
 			System.out.println("DataSource not found");
 		}
+		return dataSource;
 	}
 	
-	public static ConnectionPool getInstance() {
-		if (pool == null) {
-			pool = new ConnectionPool();
-		}
-		return pool;
-	}
-	
-	public Connection getConnection() {
+	public static Connection getConnection() {
+		Connection connection = null;
 		try {
-			return dataSource.getConnection();
-		} catch(SQLException sqle) {
+			connection = getDataSource().getConnection();
+		} catch (SQLException e) {
+			//log
+		}		
+		return connection;		
+	}
+	
+	public static void close(Statement s) {		
+		try {
+			if (s != null) {
+				s.close();
+			}
+		} catch (SQLException sqle) {
 			sqle.printStackTrace();
-			return null;
+		}
+	}
+		
+	public static void close(ResultSet rs) {		
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
 		}
 	}
 	
-	public void freeConnection(Connection c) {
+	public static void close(Connection con) {
 		try {
-			c.close();
+			con.close();
 		} catch(SQLException sqle) {
 			sqle.printStackTrace();
 		}
@@ -51,7 +66,7 @@ public class ConnectionPool {
 	 * @param con
 	 *            Connection to be rollbacked and closed.
 	 */
-	public void rollback(Connection con) {
+	public static void rollback(Connection con) {
 		if (con != null) {
 			try {
 				con.rollback();

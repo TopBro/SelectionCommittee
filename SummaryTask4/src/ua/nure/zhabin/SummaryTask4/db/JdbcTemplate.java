@@ -9,7 +9,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import ua.nure.zhabin.SummaryTask4.db.DbUtil;
+import ua.nure.zhabin.SummaryTask4.Exception.MysqlRepositoryException;
+import ua.nure.zhabin.SummaryTask4.db.DbManager;
 import ua.nure.zhabin.SummaryTask4.db.mapper.Mapper;
 
 public class JdbcTemplate<E> {
@@ -29,9 +30,12 @@ public class JdbcTemplate<E> {
 			}
 		} catch (SQLException e) {
 			LOG.error("Cannot obtain objects!", e);
+			MysqlRepositoryException mre = new MysqlRepositoryException(e.getMessage());
+			mre.initCause(e);
+			throw mre;
 		} finally {
-			DbUtil.close(ps);
-			DbUtil.close(rs);
+			DbManager.close(ps);
+			DbManager.close(rs);
 		}
 		return list;
 	}
@@ -51,14 +55,17 @@ public class JdbcTemplate<E> {
 			}
 		} catch (SQLException e) {
 			LOG.error("Cannot obtain object!", e);
+			MysqlRepositoryException mre = new MysqlRepositoryException(e.getMessage());
+			mre.initCause(e);
+			throw mre;
 		} finally {
-			DbUtil.close(ps);
-			DbUtil.close(rs);
+			DbManager.close(ps);
+			DbManager.close(rs);
 		}
 		return object;
 	}
 	
-	public List<E> getAllByParameter(Connection connection, Parameter parameter,
+	/*public List<E> getAllByParameter(Connection connection, Parameter parameter,
 			Mapper<E> extractor) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -76,12 +83,15 @@ public class JdbcTemplate<E> {
 			}
 		} catch (SQLException e) {
 			LOG.error("Cannot obtain objects!", e);
+			MysqlRepositoryException mre = new MysqlRepositoryException(e.getMessage());
+			mre.initCause(e);
+			throw mre;
 		} finally {
 			DbUtil.close(ps);
 			DbUtil.close(rs);
 		}
 		return list;
-	}	
+	}*/	
 	
 	public void update(Connection connection, String sql, Object[] arr) {
 		PreparedStatement ps = null;
@@ -93,8 +103,11 @@ public class JdbcTemplate<E> {
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			LOG.error("Cannot obtain object!", e);
+			MysqlRepositoryException mre = new MysqlRepositoryException(e.getMessage());
+			mre.initCause(e);
+			throw mre;
 		} finally {
-			DbUtil.close(ps);
+			DbManager.close(ps);
 		}
 	}
 	
@@ -114,9 +127,12 @@ public class JdbcTemplate<E> {
 			}
 		} catch (SQLException e) {
 			LOG.error("Cannot obtain object!", e);
+			MysqlRepositoryException mre = new MysqlRepositoryException(e.getMessage());
+			mre.initCause(e);
+			throw mre;
 		} finally {
-			DbUtil.close(ps);
-			DbUtil.close(rs);
+			DbManager.close(ps);
+			DbManager.close(rs);
 		}
 		return key;
 	}
