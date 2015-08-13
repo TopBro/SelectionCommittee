@@ -15,7 +15,7 @@ public class MysqlCertificateMarksDao implements MarksDao<CertificateMarks> {
 	private JdbcTemplate<VnoMarks> jdbcTemplate;
 	
 	public MysqlCertificateMarksDao() {
-		jdbcTemplate = new JdbcTemplate<>();
+		this.jdbcTemplate = new JdbcTemplate<>();
 	}
 	
 	@Override

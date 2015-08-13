@@ -1,4 +1,4 @@
-package ua.nure.zhabin.SummaryTask4.Exception;
+package ua.nure.zhabin.SummaryTask4.exception;
 
 public class MysqlRepositoryException extends RuntimeException {
 

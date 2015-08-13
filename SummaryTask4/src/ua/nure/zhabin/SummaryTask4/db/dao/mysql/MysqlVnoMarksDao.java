@@ -13,7 +13,7 @@ public class MysqlVnoMarksDao implements MarksDao<VnoMarks> {
 	private JdbcTemplate<VnoMarks> jdbcTemplate;
 	
 	public MysqlVnoMarksDao() {
-		jdbcTemplate = new JdbcTemplate<>();
+		this.jdbcTemplate = new JdbcTemplate<>();
 	}
 	
 	@Override

@@ -9,9 +9,9 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import ua.nure.zhabin.SummaryTask4.Exception.MysqlRepositoryException;
 import ua.nure.zhabin.SummaryTask4.db.DbManager;
 import ua.nure.zhabin.SummaryTask4.db.mapper.Mapper;
+import ua.nure.zhabin.SummaryTask4.exception.MysqlRepositoryException;
 
 public class JdbcTemplate<E> {
 	

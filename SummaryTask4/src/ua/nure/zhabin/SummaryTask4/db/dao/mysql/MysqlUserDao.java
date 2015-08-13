@@ -16,7 +16,7 @@ public class MysqlUserDao implements UserDao {
 	private JdbcTemplate<User> jdbcTemplate;
 	
 	public MysqlUserDao() {
-		jdbcTemplate = new JdbcTemplate<>();
+		this.jdbcTemplate = new JdbcTemplate<>();
 	}
 
 	@Override

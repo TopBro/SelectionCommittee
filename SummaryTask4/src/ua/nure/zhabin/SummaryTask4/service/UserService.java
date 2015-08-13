@@ -2,7 +2,6 @@ package ua.nure.zhabin.SummaryTask4.service;
 
 import java.sql.Connection;
 
-import ua.nure.zhabin.SummaryTask4.Exception.MysqlRepositoryException;
 import ua.nure.zhabin.SummaryTask4.bean.SignupBean;
 import ua.nure.zhabin.SummaryTask4.db.DbManager;
 import ua.nure.zhabin.SummaryTask4.db.dao.EnrolleeDao;
@@ -12,6 +11,7 @@ import ua.nure.zhabin.SummaryTask4.db.entity.CertificateMarks;
 import ua.nure.zhabin.SummaryTask4.db.entity.Enrollee;
 import ua.nure.zhabin.SummaryTask4.db.entity.User;
 import ua.nure.zhabin.SummaryTask4.db.entity.VnoMarks;
+import ua.nure.zhabin.SummaryTask4.exception.MysqlRepositoryException;
 import ua.nure.zhabin.SummaryTask4.util.SignupBeanExtractor;
 
 public class UserService {
