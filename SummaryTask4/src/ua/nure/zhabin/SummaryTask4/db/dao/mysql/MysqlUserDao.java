@@ -20,7 +20,7 @@ public class MysqlUserDao implements UserDao {
 	}
 
 	@Override
-	public User get(int id, Connection connection) {
+	public User get(long id, Connection connection) {
 		return jdbcTemplate.get(connection, GET_USER_BY_ID, new Object[] {id}, new UserMapper());
 	}
 

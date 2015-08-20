@@ -10,6 +10,7 @@ import ua.nure.zhabin.SummaryTask4.db.mapper.EnrolleeMapper;
 
 public class MysqlEnrolleeDao implements EnrolleeDao {
 	
+	private static final String GET_ENROLLEE = "Select * from Enrollees where user_id = ?";
 	private static final String GET_ALL_ENROLLEES = "Select * from Enrollees";
 	private static final String ADD_ENROLLEE = "Insert into Enrollees "
 			+ "values(default, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -21,10 +22,15 @@ public class MysqlEnrolleeDao implements EnrolleeDao {
 	public MysqlEnrolleeDao() {
 		this.jdbcTemplate = new JdbcTemplate<>();
 	}
+	
+	@Override
+	public Enrollee get(long userId, Connection connection) {
+		return jdbcTemplate.get(connection, GET_ENROLLEE, new Object[] {userId}, new EnrolleeMapper());
+	}
 
 	@Override
 	public List<Enrollee> get(Connection connection) {
-		return jdbcTemplate.getAll(connection, GET_ALL_ENROLLEES, new EnrolleeMapper());
+		return jdbcTemplate.getAll(connection, GET_ALL_ENROLLEES, new Object[] {}, new EnrolleeMapper());
 	}
 
 	@Override

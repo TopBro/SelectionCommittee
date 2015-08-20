@@ -17,15 +17,18 @@ public class JdbcTemplate<E> {
 	
 	private static final Logger LOG = Logger.getLogger(JdbcTemplate.class);
 	
-	public List<E> getAll(Connection connection, String sql, Mapper<E> extractor) {
+	public List<E> getAll(Connection connection, String sql, Object[] arr, Mapper<E> mapper) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		List<E> list = new ArrayList<>();
 		try {
 			ps = connection.prepareStatement(sql);
+			for (int i = 0; i < arr.length; i++) {
+				ps.setObject(i + 1, arr[i]);
+			}
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				E object = extractor.extract(rs);
+				E object = mapper.extract(rs);
 				list.add(object);
 			}
 		} catch (SQLException e) {
@@ -40,7 +43,7 @@ public class JdbcTemplate<E> {
 		return list;
 	}
 	
-	public E get(Connection connection, String sql, Object[] arr, Mapper<E> extractor) {
+	public E get(Connection connection, String sql, Object[] arr, Mapper<E> mapper) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		E object = null;
@@ -51,7 +54,7 @@ public class JdbcTemplate<E> {
 			}
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				object = extractor.extract(rs);
+				object = mapper.extract(rs);
 			}
 		} catch (SQLException e) {
 			LOG.error("Cannot obtain object!", e);
@@ -65,33 +68,6 @@ public class JdbcTemplate<E> {
 		return object;
 	}
 	
-	/*public List<E> getAllByParameter(Connection connection, Parameter parameter,
-			Mapper<E> extractor) {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		List<E> list = new ArrayList<>();
-		try {
-			ps = connection.prepareStatement(parameter.getSql());
-			for (int i = 0; i < parameter.getParams().size(); i++) {
-				ps.setObject(i + 1, parameter.getParams().get(i));
-			}
-			LOG.info("Complete SQL query: " + ps);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				E object = extractor.extract(rs);
-				list.add(object);
-			}
-		} catch (SQLException e) {
-			LOG.error("Cannot obtain objects!", e);
-			MysqlRepositoryException mre = new MysqlRepositoryException(e.getMessage());
-			mre.initCause(e);
-			throw mre;
-		} finally {
-			DbUtil.close(ps);
-			DbUtil.close(rs);
-		}
-		return list;
-	}*/	
 	
 	public void update(Connection connection, String sql, Object[] arr) {
 		PreparedStatement ps = null;

@@ -1,18 +1,16 @@
 package ua.nure.zhabin.SummaryTask4.db.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Connection;
 import java.util.List;
 
 import ua.nure.zhabin.SummaryTask4.db.entity.Faculty;
 
 public interface FacultyDao {
 	
-	public int insertCourse();
-	public boolean deleteCourse();	
-	public boolean updateCourse();	
-	public List<Faculty> findCourses();
-	public List<Faculty> findCourses(int topicId);
-	public List<Faculty> findCourses(int statusId, int userId, int mark);
-	public Faculty extractCourse(ResultSet rs) throws SQLException;
+	Faculty getById(long facultyId, Connection connection);
+	Faculty getByName(String name, Connection connection);
+	List<Faculty> getAll(Connection connection);
+	void add(Faculty faculty, Connection connection);
+	void update(Faculty faculty, Connection connection);
+	void delete(long facultyId, Connection connection);
 }

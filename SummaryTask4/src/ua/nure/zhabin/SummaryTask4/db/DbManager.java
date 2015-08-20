@@ -16,8 +16,7 @@ public class DbManager {
 			InitialContext ic = new InitialContext();
 			dataSource = (DataSource) ic.lookup("java:/comp/env/jdbc/summary4");
 		} catch(Exception e) {
-			e.printStackTrace();
-			System.out.println("DataSource not found");
+			//log
 		}
 		return dataSource;
 	}
@@ -38,7 +37,7 @@ public class DbManager {
 				s.close();
 			}
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			//log
 		}
 	}
 		
@@ -48,7 +47,7 @@ public class DbManager {
 				rs.close();
 			}
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			//log
 		}
 	}
 	

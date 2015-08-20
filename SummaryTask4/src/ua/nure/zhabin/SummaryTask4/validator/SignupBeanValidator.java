@@ -14,11 +14,7 @@ public class SignupBeanValidator implements Validator<SignupBean> {
 				bean.getEmail() == null || bean.getEmail().length() == 0 ||
 				bean.getCity() == null || bean.getCity().length() == 0 ||
 				bean.getRegion() == null || bean.getRegion().length() == 0 ||
-				bean.getEducation() == null || bean.getEducation().length() == 0 ||
-				bean.getUkrainian() == 0 || bean.getMathematics() == 0 || bean.getPhysics() == 0 ||
-				bean.getLiterature() == 0 || bean.getHistory() == 0 || bean.getEnglish() == 0 ||
-				bean.getInformatics() == 0 || bean.getGeography() == 0 || bean.getBiology() == 0 ||
-				bean.getChemistry() == 0) {
+				bean.getEducation() == null || bean.getEducation().length() == 0) {
 			return false;
 		}
 		return true;

@@ -6,7 +6,8 @@ public class Faculty extends Entity {
 	
 	private String name;
 	private int budget;
-	private int contract;
+	private int total;
+	private int facultyStatusId;
 	
 	public String getName() {
 		return name;
@@ -20,16 +21,22 @@ public class Faculty extends Entity {
 	public void setBudget(int budget) {
 		this.budget = budget;
 	}
-	public int getContract() {
-		return contract;
+	public int getTotal() {
+		return total;
 	}
-	public void setContract(int contract) {
-		this.contract = contract;
+	public void setTotal(int total) {
+		this.total = total;
+	}	
+	public int getFacultyStatusId() {
+		return facultyStatusId;
+	}
+	public void setFacultyStatusId(int facultyStatusId) {
+		this.facultyStatusId = facultyStatusId;
 	}
 	
 	@Override
 	public String toString() {
-		return "Faculty [name=" + name + ", budget=" + budget + ", contract="
-				+ contract + ", getId()=" + getId() + "]";
+		return "Faculty [name=" + name + ", budget=" + budget + ", total="
+				+ total + ", getId()=" + getId() + "]";
 	}
 }

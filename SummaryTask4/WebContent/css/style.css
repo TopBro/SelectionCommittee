@@ -10,7 +10,11 @@
 
 /* Basic */
 
-	p.italic {
+	input.center {
+		text-align: center;
+	}
+	
+	b.italic {
     	font-style: italic;
 	}
 

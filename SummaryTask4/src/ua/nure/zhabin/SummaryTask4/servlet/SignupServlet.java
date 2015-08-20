@@ -2,14 +2,11 @@ package ua.nure.zhabin.SummaryTask4.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -36,19 +33,51 @@ public class SignupServlet extends HttpServlet {
 		this.validator = (SignupBeanValidator) getServletContext().getAttribute("SignupBeanValidator");
 	}
 
-	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-		this.userService = (UserService) config.getServletContext().getAttribute("UserService");
-		this.validator = (SignupBeanValidator) config.getServletContext()
-				.getAttribute("SignupBeanValidator");
-	}
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String parameter = request.getParameter("message");
+		if (parameter != null) {
+			String message = "You are signed up<br>Enter your login<br>and password to log in";
+			request.setAttribute("loginMessage", message);
+		}
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String message = null;
+		SignupBean signupBean = fillSignupBean(request);
+		
+		if (!validator.isValid(signupBean)) {
+			LOG.warn("Form data is not valid. Redirect to sign up page.");
+			message = "All fields must be filled.";
+			forwardToSignupPage(request, response, signupBean, message);
+			return;
+		}
+		
+		if (userService.isUserExist(signupBean.getLogin())) {
+			LOG.warn("User already exist. Redirect to sign up page.");
+			message = "User already exist. Choose another username.";
+			forwardToSignupPage(request, response, signupBean, message);
+			return;
+		}
+		
+		if (userService.createUser(signupBean) != -1) {
+			response.sendRedirect("Signup?message=true");
+		} else {
+			message = "Cannot create user.";
+			forwardToSignupPage(request, response, signupBean, message);
+		}		
+	}
+
+	private void forwardToSignupPage(HttpServletRequest request, HttpServletResponse response,
+			SignupBean signupBean, String message) throws ServletException, IOException {
+		
+		request.setAttribute("signupMessage", message);
+		request.setAttribute("signupBean", signupBean);
+		
+		request.getRequestDispatcher("SignupPage.jsp").forward(request, response);
+	}
+	
+	private SignupBean fillSignupBean(HttpServletRequest request) {
 		SignupBean signupBean = new SignupBean();
 		signupBean.setLogin(request.getParameter(Fields.USER_LOGIN));
 		signupBean.setPassword(request.getParameter(Fields.USER_PASSWORD));
@@ -58,55 +87,7 @@ public class SignupServlet extends HttpServlet {
 		signupBean.setEmail(request.getParameter(Fields.ENROLLEE_EMAIL));
 		signupBean.setCity(request.getParameter(Fields.ENROLLEE_CITY));
 		signupBean.setRegion(request.getParameter(Fields.ENROLLEE_REGION));
-		signupBean.setEducation(request.getParameter(Fields.ENROLLEE_EDUCATION));
-		try {
-			signupBean.setUkrainian(Integer.valueOf(request.getParameter(Fields.UKRAINIAN)));
-			signupBean.setMathematics(Integer.valueOf(request.getParameter(Fields.MATHEMATICS)));
-			signupBean.setPhysics(Integer.valueOf(request.getParameter(Fields.PHYSICS)));
-			signupBean.setLiterature(Integer.valueOf(request.getParameter(Fields.LITERATURE)));
-			signupBean.setHistory(Integer.valueOf(request.getParameter(Fields.HISTORY)));
-			signupBean.setEnglish(Integer.valueOf(request.getParameter(Fields.ENGLISH)));
-			signupBean.setInformatics(Integer.valueOf(request.getParameter(Fields.INFORMATICS)));
-			signupBean.setGeography(Integer.valueOf(request.getParameter(Fields.GEOGRAPHY)));
-			signupBean.setBiology(Integer.valueOf(request.getParameter(Fields.BIOLOGY )));
-			signupBean.setChemistry(Integer.valueOf(request.getParameter(Fields.CHEMISTRY)));
-		} catch (NumberFormatException e) {
-			LOG.warn("Subject data is not valid. Redirect to sign up page.");
-			message = "Fields for marks may contain numbers only.";
-			redirectToSignupPage(request, response, signupBean, message);
-			return;
-		}
-		
-		if (!validator.isValid(signupBean)) {
-			LOG.warn("Form data is not valid. Redirect to sign up page.");
-			message = "All fields must be filled.";
-			redirectToSignupPage(request, response, signupBean, message);
-			return;
-		}
-		
-		if (userService.isUserExist(signupBean.getLogin())) {
-			LOG.warn("User already exist. Redirect to sign up page.");
-			message = "User already exist. Choose another username.";
-			redirectToSignupPage(request, response, signupBean, message);
-			return;
-		}
-		
-		userService.createUser(signupBean);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/test.jsp");
-		dispatcher.forward(request, response);
-		
-		
-		
-	}
-
-	private void redirectToSignupPage(HttpServletRequest request, HttpServletResponse response,
-			SignupBean signupBean, String message) throws ServletException, IOException {
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("message", message);
-		session.setAttribute("signupBean", signupBean);
-		
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/SignupPage.jsp");
-		dispatcher.forward(request, response);
+		signupBean.setEducation(request.getParameter(Fields.ENROLLEE_EDUCATION));		
+		return signupBean;
 	}
 }

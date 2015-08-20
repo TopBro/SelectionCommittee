@@ -1,5 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ page import="ua.nure.zhabin.SummaryTask4.bean.SignupBean" %>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	<fmt:setBundle basename="ua.nure.zhabin.SummaryTask4.locale.resources.resources"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,34 +24,24 @@
 </head>
 <body class="contact loading">
 
-	<%@ page import="ua.nure.zhabin.SummaryTask4.bean.SignupBean" %>
-	
 		<!-- Header -->
 			<header id="header">
-				<h1 id="logo"><a href="index.html">Twenty <span>by HTML5 UP</span></a></h1>
+				<h1 id="logo"><fmt:message key="knure"/></h1>
 				<nav id="nav">
 					<ul>
-						<li class="current"><a href="index.html">Welcome</a></li>
 						<li class="submenu">
-							<a href="">Layouts</a>
+							<a href=""><fmt:message key="menu"/></a>
 							<ul>
-								<li><a href="left-sidebar.html">Left Sidebar</a></li>
-								<li><a href="right-sidebar.html">Right Sidebar</a></li>
-								<li><a href="no-sidebar.html">No Sidebar</a></li>
-								<li><a href="contact.html">Contact</a></li>
 								<li class="submenu">
-									<a href="">Submenu</a>
+									<a href=""><fmt:message key="language"/></a>
 									<ul>
-										<li><a href="#">Dolore Sed</a></li>
-										<li><a href="#">Consequat</a></li>
-										<li><a href="#">Lorem Magna</a></li>
-										<li><a href="#">Sed Magna</a></li>
-										<li><a href="#">Ipsum Nisl</a></li>
+										<li><a href="<c:url value="Locale?lang=ru"/>"><fmt:message key="rus"/></a></li>
+										<li><a href="<c:url value="Locale?lang=en"/>"><fmt:message key="eng"/></a></li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-						<li><a href="#" class="button special">Sign Up</a></li>
+						<li><a href="index.jsp" class="button special"><fmt:message key="signin"/></a></li>
 					</ul>
 				</nav>
 			</header>
@@ -57,99 +51,59 @@
 
 				<header class="special container">
 					<span class="icon fa-envelope"></span>
-					<h2>SignUp</h2>
-					<p>Use the form below to give information about yourself.</p>
+					<h2><fmt:message key="signup"/></h2>
+					<p><fmt:message key="informationAboutYourself"/></p>
 				</header>
 					
 				<!-- One -->
 					<section class="wrapper style4 special container small">
-					
+					<b class="italic">${signupMessage}</b>
 						<!-- Content -->
 							<div class="content">
-								<p class="italic"><b>${message}</b></p>
+								
 								<form action="Signup" method="post">
-									<h3>Personal Information</h3>
+									<h3><fmt:message key="personalInfo"/></h3>
 									<div class="row half no-collapse-1">
 										<div class="6u">
-											<input type="text" name="login" placeholder="Login" value="${signupBean.login}" />
+											<input type="text" name="login" placeholder="<fmt:message key="login"/>" value="${signupBean.login}" />
 										</div>
 										<div class="6u">
-											<input type="password" name="password" placeholder="Password" value="${signupBean.password}" />
+											<input type="password" name="password" placeholder="<fmt:message key="password"/>" value="${signupBean.password}" />
 										</div>
 									</div>
 									<div class="row half no-collapse-1">
 										<div class="6u">
-											<input type="text" name="last_name" placeholder="Last Name" value="${signupBean.lastName}" />
+											<input type="text" name="last_name" placeholder="<fmt:message key="last_name"/>" value="${signupBean.lastName}" />
 										</div>
 										<div class="6u">
-											<input type="text" name="first_name" placeholder="First Name" value="${signupBean.firstName}" />
+											<input type="text" name="first_name" placeholder="<fmt:message key="first_name"/>" value="${signupBean.firstName}" />
 										</div>
 										<div class="6u">
-											<input type="text" name="middle_name" placeholder="Midle Name" value="${signupBean.midleName}" />
+											<input type="text" name="middle_name" placeholder="<fmt:message key="middle_name"/>" value="${signupBean.midleName}" />
 										</div>
 									</div>
 									<div class="row half">
 										<div class="6u">
-											<input type="text" name="email" placeholder="Email" value="${signupBean.email}" />
+											<input type="text" name="email" placeholder="<fmt:message key="email"/>" value="${signupBean.email}" />
 										</div>
 									</div>
 									<div class="row half no-collapse-1">
 										<div class="6u">
-											<input type="text" name="city" placeholder="City" value="${signupBean.city}" />
+											<input type="text" name="city" placeholder="<fmt:message key="city"/>" value="${signupBean.city}" />
 										</div>
 										<div class="6u">
-											<input type="text" name="region" placeholder="Region" value="${signupBean.region}" />
+											<input type="text" name="region" placeholder="<fmt:message key="region"/>" value="${signupBean.region}" />
 										</div>
 									</div>
 									<div class="row half">
 										<div class="6u">
-											<input type="text" name="education" placeholder="Education" value="${signupBean.education}" />
+											<input type="text" name="education" placeholder="<fmt:message key="education"/>" value="${signupBean.education}" />
 										</div>
 									</div><br>
-									<h3>Marks from external independent testing</h3>
-									<div class="row half no-collapse-1">
-										<div class="4u">
-											<input type="text" name="ukrainian" placeholder="Ukrainian" value="${signupBean.ukrainian}" />
-										</div>
-										<div class="4u">
-											<input type="text" name="mathematics" placeholder="Mathematics" value="${signupBean.mathematics}" />
-										</div>
-										<div class="4u">
-											<input type="text" name="physics" placeholder="Physics" value="${signupBean.physics}" />
-										</div>
-									</div><br>
-									<h3>Marks from certificate</h3>
-									<div class="row half no-collapse-1">
-										<div class="4u">
-											<input type="text" name="literature" placeholder="Literature" value="${signupBean.literature}" />
-										</div>
-										<div class="4u">
-											<input type="text" name="history" placeholder="History" value="${signupBean.history}" />
-										</div>
-										<div class="4u">
-											<input type="text" name="english" placeholder="English" value="${signupBean.english}" />
-										</div>			
-									</div>
-									<div class="row half no-collapse-1">
-										<div class="4u">
-											<input type="text" name="informatics" placeholder="Informatics" value="${signupBean.informatics}" />
-										</div>
-										<div class="4u">
-											<input type="text" name="geography" placeholder="Geography" value="${signupBean.geography}" />
-										</div>
-										<div class="4u">
-											<input type="text" name="biology" placeholder="Biology" value="${signupBean.biology}" />
-										</div>
-									</div>
-									<div class="row half">
-										<div class="4u">
-											<input type="text" name="chemistry" placeholder="Chemistry" value="${signupBean.chemistry}" />
-										</div>
-									</div>
 									<div class="row">
 										<div class="12u">
 											<ul class="buttons">
-												<li><input class="button special" type="submit" value="Sign Up"></li>
+												<li><input class="button special" type="submit" value="<fmt:message key="signup"/>"></li>
 											</ul>
 										</div>
 									</div>

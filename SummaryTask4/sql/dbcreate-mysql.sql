@@ -5,6 +5,7 @@ DROP TABLE vno_marks;
 DROP TABLE enrollees;
 DROP TABLE users;
 DROP TABLE faculties;
+DROP TABLE faculty_status;
 DROP TABLE statuses;
 DROP TABLE states;
 DROP TABLE roles;
@@ -44,23 +45,35 @@ INSERT INTO statuses VALUES(2, 'budget');
 INSERT INTO statuses VALUES(3, 'contract');
 INSERT INTO statuses VALUES(4, 'not_enrolled');
 
+CREATE TABLE faculty_status(
+
+	id INTEGER NOT NULL, 	
+	name VARCHAR(15) NOT NULL UNIQUE,
+	PRIMARY KEY (id)
+) ENGINE InnoDB CHARACTER SET utf8;
+
+INSERT INTO faculty_status VALUES(1, 'open');
+INSERT INTO faculty_status VALUES(2, 'closed');
 
 CREATE TABLE faculties(
 
 	id SERIAL, 	
 	name VARCHAR(10) NOT NULL UNIQUE,
 	budget INTEGER UNSIGNED NOT NULL,
-	contract INTEGER UNSIGNED NOT NULL,
-	PRIMARY KEY (id)
+	total INTEGER UNSIGNED NOT NULL,
+	faculty_status_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (faculty_status_id) REFERENCES faculty_status(id)
+	ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE InnoDB CHARACTER SET utf8;
 
-INSERT INTO faculties VALUES(DEFAULT, 'œÃÃ', 90, 100);
-INSERT INTO faculties VALUES(DEFAULT, ' Õ', 78, 102);
-INSERT INTO faculties VALUES(DEFAULT, ' »”', 83, 97);
-INSERT INTO faculties VALUES(DEFAULT, '–“', 102, 112);
-INSERT INTO faculties VALUES(DEFAULT, '“ »“', 80, 110);
-INSERT INTO faculties VALUES(DEFAULT, '¿ “', 67, 89);
-INSERT INTO faculties VALUES(DEFAULT, '›“', 60, 88);
+INSERT INTO faculties VALUES(DEFAULT, 'œÃÃ', 90, 200, 1);
+INSERT INTO faculties VALUES(DEFAULT, ' Õ', 78, 192, 1);
+INSERT INTO faculties VALUES(DEFAULT, ' »”', 83, 185, 1);
+INSERT INTO faculties VALUES(DEFAULT, '–“', 102, 210, 1);
+INSERT INTO faculties VALUES(DEFAULT, '“ »“', 80, 195, 1);
+INSERT INTO faculties VALUES(DEFAULT, '¿ “', 67, 152, 1);
+INSERT INTO faculties VALUES(DEFAULT, '›“', 60, 147, 1);
 
 
 CREATE TABLE users(

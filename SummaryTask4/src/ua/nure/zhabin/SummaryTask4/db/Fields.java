@@ -13,8 +13,15 @@ public final class Fields {
 	
 	public static final int ACTIVE_STATE = 1;
 	public static final int BLOCKED_STATE = 2;
+	
+	public static final int REGISTRATION_STATUS_WAITING = 1;
 		
+	public static final int FACULTY_OPEN = 1;
+	public static final int FACULTY_CLOSED = 2;
+	
 	public static final String ENTITY_ID = "id";
+	
+	public static final String REGISTRATION_STATUS_ID = "status_id";
 	
 	public static final String USER_ID = "user_id";
 	public static final String USER_LOGIN = "login";
@@ -41,5 +48,9 @@ public final class Fields {
 	public static final String BIOLOGY = "biology";
 	public static final String CHEMISTRY = "chemistry";
 	
-	
+	public static final String FACULTY_ID = "faculty_id";
+	public static final String FACULTY_NAME = "name";
+	public static final String FACULTY_BUDGET = "budget";
+	public static final String FACULTY_TOTAL = "total";
+	public static final String FACULTY_STATUS_ID = "faculty_status_id";
 }

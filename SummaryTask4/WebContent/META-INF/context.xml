@@ -6,5 +6,5 @@
 		driverClassName="com.mysql.jdbc.Driver"
 		url="jdbc:mysql://localhost:3306/summary4?autoReconnct=true"
 		logAbandoned="true" removeAbandoned="true"
-		removeAbandonedTimeout="60" type="javax.sql.DataSource" />
+		removeAbandonedTimeout="60" type="javax.sql.DataSource" defaultAutoCommit="false" />
 </Context>

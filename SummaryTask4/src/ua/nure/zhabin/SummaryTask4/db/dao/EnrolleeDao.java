@@ -7,6 +7,7 @@ import ua.nure.zhabin.SummaryTask4.db.entity.Enrollee;
 
 public interface EnrolleeDao {
 	
+	Enrollee get(long userId, Connection connection);
 	List<Enrollee> get(Connection connection);
 	void add(Enrollee enrollee, Connection connection);
 	void update(Enrollee enrollee, Connection connection);
