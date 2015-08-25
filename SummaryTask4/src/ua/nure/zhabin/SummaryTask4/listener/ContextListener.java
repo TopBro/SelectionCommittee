@@ -12,11 +12,13 @@ import ua.nure.zhabin.SummaryTask4.bean.SignupBean;
 import ua.nure.zhabin.SummaryTask4.db.dao.EnrolleeDao;
 import ua.nure.zhabin.SummaryTask4.db.dao.FacultyDao;
 import ua.nure.zhabin.SummaryTask4.db.dao.MarksDao;
+import ua.nure.zhabin.SummaryTask4.db.dao.RegisterDao;
 import ua.nure.zhabin.SummaryTask4.db.dao.RegistrationDao;
 import ua.nure.zhabin.SummaryTask4.db.dao.UserDao;
 import ua.nure.zhabin.SummaryTask4.db.dao.mysql.MysqlCertificateMarksDao;
 import ua.nure.zhabin.SummaryTask4.db.dao.mysql.MysqlEnrolleeDao;
 import ua.nure.zhabin.SummaryTask4.db.dao.mysql.MysqlFacultyDao;
+import ua.nure.zhabin.SummaryTask4.db.dao.mysql.MysqlRegisterDao;
 import ua.nure.zhabin.SummaryTask4.db.dao.mysql.MysqlRegistrationDao;
 import ua.nure.zhabin.SummaryTask4.db.dao.mysql.MysqlUserDao;
 import ua.nure.zhabin.SummaryTask4.db.dao.mysql.MysqlVnoMarksDao;
@@ -52,11 +54,14 @@ public class ContextListener implements ServletContextListener {
     	MarksDao<CertificateMarks> certificateMarksDao = new MysqlCertificateMarksDao();
     	RegistrationDao registrationDao = new MysqlRegistrationDao();
     	FacultyDao facultyDao = new MysqlFacultyDao();
+    	RegisterDao registerDao = new MysqlRegisterDao();
     	
     	UserService userService = new UserService(userDao, enrolleeDao);
     	MarksService marksService = new MarksService(vnoMarksDao, certificateMarksDao);
-    	RegistrationService registrationService = new RegistrationService(registrationDao, enrolleeDao, facultyDao);
+    	RegistrationService registrationService = new RegistrationService(registrationDao, 
+    			enrolleeDao, facultyDao, registerDao);
     	FacultiesService facutiesService = new FacultiesService(facultyDao);
+    	
     	
     	Validator<SignupBean> signupBeanValidator = new SignupBeanValidator();
     	Validator<MarksBean> marksBeanValidator = new MarksBeanValidator();

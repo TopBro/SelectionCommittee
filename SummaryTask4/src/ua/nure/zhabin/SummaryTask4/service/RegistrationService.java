@@ -6,10 +6,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import ua.nure.zhabin.SummaryTask4.bean.RegisterRecordBean;
 import ua.nure.zhabin.SummaryTask4.db.DbManager;
 import ua.nure.zhabin.SummaryTask4.db.Fields;
 import ua.nure.zhabin.SummaryTask4.db.dao.EnrolleeDao;
 import ua.nure.zhabin.SummaryTask4.db.dao.FacultyDao;
+import ua.nure.zhabin.SummaryTask4.db.dao.RegisterDao;
 import ua.nure.zhabin.SummaryTask4.db.dao.RegistrationDao;
 import ua.nure.zhabin.SummaryTask4.db.entity.Enrollee;
 import ua.nure.zhabin.SummaryTask4.db.entity.Faculty;
@@ -23,11 +25,14 @@ public class RegistrationService {
 	 private RegistrationDao registrationDao;
 	 private EnrolleeDao enrolleeDao;
 	 private FacultyDao facultyDao;
+	 private RegisterDao registerDao;
 	 
-	 public RegistrationService(RegistrationDao registrationDao, EnrolleeDao enrolleeDao, FacultyDao facultyDao) {
+	 public RegistrationService(RegistrationDao registrationDao, EnrolleeDao enrolleeDao, FacultyDao facultyDao, 
+			 RegisterDao registerDao) {
 		 this.registrationDao = registrationDao;
 		 this.enrolleeDao = enrolleeDao;
 		 this.facultyDao = facultyDao;
+		 this.registerDao = registerDao;
 	 }
 	 
 	 public boolean isFacultyClosed(long facultyId) {
@@ -52,9 +57,9 @@ public class RegistrationService {
 		 return registrationDao.getAllByUserId(userId, con);
 	 }
 	 
-	 public List<RegistrationRecord> getAllByFacultyId(long facultyId) {
+	 public List<RegisterRecordBean> getAllByFacultyId(long facultyId) {
 		 Connection con = DbManager.getConnection();
-		 return registrationDao.getAllByFacultyId(facultyId, con);
+		 return registerDao.getAllByFacultyId(facultyId, con);
 	 }
 	 
 	 public void addRegistrationRecord(long userId, long facultyId) {

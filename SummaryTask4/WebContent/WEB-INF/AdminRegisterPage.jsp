@@ -62,37 +62,31 @@
 							
 								<div class="row half no-collapse-1">
 									<div class="2u">
-										<fmt:message key="faculty_name"/>
+										<fmt:message key="last_name"/>
 									</div>
 									<div class="2u">
-										<fmt:message key="budget_place"/>
+										<fmt:message key="first_name"/>
 									</div>
 									<div class="2u">
-										<fmt:message key="total_place"/>
+										<fmt:message key="middle_name"/>
+									</div>
+									<div class="2u">
+										<fmt:message key="vno_sum"/>
 									</div>
 								</div>								
-								<c:forEach var="faculty" items="${faculties}">
+								<c:forEach var="regRecord" items="${list}">
 									<div class="row half no-collapse-1">
 										<div class="2u">
-											${faculty.name}
+											${regRecord.lastName}
 										</div>
 										<div class="2u">
-											${faculty.budget}
+											${regRecord.firstName}
 										</div>
 										<div class="2u">
-											${faculty.total}
+											${regRecord.middleName}
 										</div>
-										<div class="3u">
-											<form action="Faculty" method="post">
-												<input type="hidden" name="faculty_id" value="${faculty.id}">
-												<input class="button small" type="submit" value="<fmt:message key="edit"/>">
-											</form>	
-										</div>
-										<div class="3u">
-											<form action="Register" method="post">
-												<input type="hidden" name="faculty_id" value="${faculty.id}">
-												<input class="button small" type="submit" value="<fmt:message key="register"/>">
-											</form>	
+										<div class="2u">
+											${regRecord.vnoSum}
 										</div>
 									</div>
 								</c:forEach>
@@ -101,7 +95,7 @@
 									<div class="row">
 										<div class="12u">
 											<ul class="buttons">
-												<li><input class="button" type="submit" value="<fmt:message key="add"/>"></li>
+												<li><input class="button" type="submit" value="<fmt:message key="close_register"/>"></li>
 											</ul>
 										</div>
 									</div>

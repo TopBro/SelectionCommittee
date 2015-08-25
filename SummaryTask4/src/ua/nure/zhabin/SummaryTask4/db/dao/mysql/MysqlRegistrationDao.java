@@ -14,9 +14,9 @@ public class MysqlRegistrationDao implements RegistrationDao {
 	private static final String GET_REGISTRATIONS_BY_USERS_ID = "select f.name, s.name from faculties as f "
 			+ "join registrations as r on f.id = r.faculty_id "
 			+ "join statuses as s on s.id = r.status_id and r.user_id = ?";
-	private static final String GET_REGISTRATIONS_BY_FACULTY_ID = "select f.name, s.name from faculties as f "
-			+ "join registrations as r on f.id = r.faculty_id "
-			+ "join statuses as s on s.id = r.status_id and r.faculty_id = ?";
+	private static final String GET_REGISTRATIONS_BY_FACULTY_ID = "select r.user_id, r.faculty_id, e.last_name, "
+			+ "e.first_name, e.middle_name, vm.ukrainian + vm.mathematics + vm.physics from registrations as r "
+			+ "join enrollees as e on e.user_id = r.user_id join vno_marks as vm on vm.user_id = r.user_id and r.faculty_id = ?";
 	private static final String GET_BY_USERS_ID_AND_FACULTY_ID = "Select * from Registrations where user_id = ? and faculty_id = ?";
 	private static final String ADD_REGISTRATION_RECORD = "Insert into Registrations values(default, ?, ?, ?)";
 	private static final String UPDATE_REGISTRATION_STATUS = "Update Registrations set status_id = ? where user_id = ? and faculty_id = ?";
