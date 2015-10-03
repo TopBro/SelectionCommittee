@@ -20,7 +20,7 @@ import ua.nure.zhabin.SelectionCommittee.exception.MysqlRepositoryException;
 
 public class RegistrationService {
 
-	private static final Logger LOG = Logger.getLogger(MarksService.class);
+	private static final Logger LOG = Logger.getLogger(RegistrationService.class);
 
 	private RegistrationDao registrationDao;
 	private EnrolleeDao enrolleeDao;

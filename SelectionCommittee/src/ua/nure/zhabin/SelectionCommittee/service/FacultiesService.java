@@ -14,7 +14,7 @@ import ua.nure.zhabin.SelectionCommittee.exception.MysqlRepositoryException;
 
 public class FacultiesService {
 
-	private static final Logger LOG = Logger.getLogger(UserService.class);
+	private static final Logger LOG = Logger.getLogger(FacultiesService.class);
 
 	private FacultyDao facultyDao;
 

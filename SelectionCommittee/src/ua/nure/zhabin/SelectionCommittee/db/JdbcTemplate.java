@@ -81,7 +81,7 @@ public class JdbcTemplate<E> {
 			}
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			LOG.error("Cannot obtain object!", e);
+			LOG.error("Cannot update object!", e);
 			MysqlRepositoryException mre = new MysqlRepositoryException(
 					e.getMessage());
 			mre.initCause(e);
@@ -107,7 +107,7 @@ public class JdbcTemplate<E> {
 				key = rs.getLong(1);
 			}
 		} catch (SQLException e) {
-			LOG.error("Cannot obtain object!", e);
+			LOG.error("Cannot create user!", e);
 			MysqlRepositoryException mre = new MysqlRepositoryException(
 					e.getMessage());
 			mre.initCause(e);
