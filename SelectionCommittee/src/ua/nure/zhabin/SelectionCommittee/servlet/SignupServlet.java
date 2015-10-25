@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import ua.nure.zhabin.SelectionCommittee.bean.SignupBean;
 import ua.nure.zhabin.SelectionCommittee.db.Fields;
 import ua.nure.zhabin.SelectionCommittee.service.UserService;
+import ua.nure.zhabin.SelectionCommittee.util.Urls;
 import ua.nure.zhabin.SelectionCommittee.validator.SignupBeanValidator;
 import ua.nure.zhabin.SelectionCommittee.validator.Validator;
 
@@ -29,74 +30,60 @@ public class SignupServlet extends HttpServlet {
 
 	public void init() throws ServletException {
 		super.init();
-		this.userService = (UserService) getServletContext().getAttribute(
-				"UserService");
-		this.validator = (SignupBeanValidator) getServletContext()
-				.getAttribute("SignupBeanValidator");
+		this.userService = (UserService) getServletContext().getAttribute("UserService");
+		this.validator = (SignupBeanValidator) getServletContext().getAttribute("SignupBeanValidator");
 	}
 
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String parameter = request.getParameter("message");
 		if (parameter != null) {
 			String message = "You are signed up<br>Enter your login<br>and password to log in";
 			request.setAttribute("loginMessage", message);
 		}
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		request.getRequestDispatcher(Urls.LOGIN_PAGE).forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String message = null;
 		SignupBean signupBean = fillSignupBean(request);
-
 		if (!validator.isValid(signupBean)) {
 			LOG.warn("Form data is not valid. Redirect to sign up page.");
 			message = "All fields must be filled.";
 			forwardToSignupPage(request, response, signupBean, message);
 			return;
 		}
-
 		if (userService.isUserExist(signupBean.getLogin())) {
 			LOG.warn("User already exist. Redirect to sign up page.");
 			message = "User already exist. Choose another username.";
 			forwardToSignupPage(request, response, signupBean, message);
 			return;
 		}
-
 		if (userService.createUser(signupBean) != -1) {
-			response.sendRedirect("Signup?message=true");
+			response.sendRedirect(Urls.SIGNUP_SERVLET + "?message=true");
 		} else {
 			message = "Cannot create user.";
 			forwardToSignupPage(request, response, signupBean, message);
 		}
 	}
 
-	private void forwardToSignupPage(HttpServletRequest request,
-			HttpServletResponse response, SignupBean signupBean, String message)
+	private void forwardToSignupPage(HttpServletRequest request, HttpServletResponse response, SignupBean signupBean, String message)
 			throws ServletException, IOException {
-
 		request.setAttribute("signupMessage", message);
 		request.setAttribute("signupBean", signupBean);
-
-		request.getRequestDispatcher("SignupPage.jsp").forward(request,
-				response);
+		request.getRequestDispatcher(Urls.SIGNUP_PAGE).forward(request, response);
 	}
 
 	private SignupBean fillSignupBean(HttpServletRequest request) {
 		SignupBean signupBean = new SignupBean();
 		signupBean.setLogin(request.getParameter(Fields.USER_LOGIN));
 		signupBean.setPassword(request.getParameter(Fields.USER_PASSWORD));
-		signupBean.setFirstName(request
-				.getParameter(Fields.ENROLLEE_FIRST_NAME));
-		signupBean.setMidleName(request
-				.getParameter(Fields.ENROLLEE_MIDDLE_NAME));
+		signupBean.setFirstName(request.getParameter(Fields.ENROLLEE_FIRST_NAME));
+		signupBean.setMidleName(request.getParameter(Fields.ENROLLEE_MIDDLE_NAME));
 		signupBean.setLastName(request.getParameter(Fields.ENROLLEE_LAST_NAME));
 		signupBean.setEmail(request.getParameter(Fields.ENROLLEE_EMAIL));
 		signupBean.setCity(request.getParameter(Fields.ENROLLEE_CITY));
 		signupBean.setRegion(request.getParameter(Fields.ENROLLEE_REGION));
-		signupBean
-				.setEducation(request.getParameter(Fields.ENROLLEE_EDUCATION));
+		signupBean.setEducation(request.getParameter(Fields.ENROLLEE_EDUCATION));
 		return signupBean;
 	}
 }

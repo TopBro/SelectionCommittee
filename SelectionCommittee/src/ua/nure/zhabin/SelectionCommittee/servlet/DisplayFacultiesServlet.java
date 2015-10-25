@@ -13,6 +13,7 @@ import ua.nure.zhabin.SelectionCommittee.db.Fields;
 import ua.nure.zhabin.SelectionCommittee.db.entity.Faculty;
 import ua.nure.zhabin.SelectionCommittee.db.entity.User;
 import ua.nure.zhabin.SelectionCommittee.service.FacultiesService;
+import ua.nure.zhabin.SelectionCommittee.util.Urls;
 
 /**
  * Servlet implementation class DisplayFacultiesServlet
@@ -32,8 +33,7 @@ public class DisplayFacultiesServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		displayFaculties(request, response);
 	}
 
@@ -41,34 +41,18 @@ public class DisplayFacultiesServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		displayFaculties(request, response);
 	}
 
-	private void displayFaculties(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	private void displayFaculties(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = (User) request.getSession().getAttribute("CurrentUser");
-
-		if (user == null) {
-			String message = "Your session has expired.<br>Enter your login<br>and password to log in.";
-			request.setAttribute("loginMessage", message);
-			request.getRequestDispatcher("index.jsp")
-					.forward(request, response);
-			return;
-		}
-
 		List<Faculty> faculties = facutiesService.getAllFaculties();
-
 		request.setAttribute("faculties", faculties);
-
 		if (user.getRoleId() == Fields.ADMIN_ROLE) {
-			request.getRequestDispatcher(
-					"WEB-INF/AdminDisplayFacultiesPage.jsp").forward(request,
-					response);
+			request.getRequestDispatcher(Urls.ADMIN_DISPLAY_FACULTIES_PAGE).forward(request, response);
 		} else {
-			request.getRequestDispatcher("DisplayFacultiesPage.jsp").forward(
-					request, response);
+			request.getRequestDispatcher(Urls.DISPLAY_FACULTIES_PAGE).forward(request, response);
 		}
 	}
 

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ua.nure.zhabin.SelectionCommittee.service.MarksService;
 import ua.nure.zhabin.SelectionCommittee.service.RegistrationService;
+import ua.nure.zhabin.SelectionCommittee.util.Urls;
 
 /**
  * Servlet implementation class FacultyRegistrationServlet
@@ -28,20 +29,16 @@ public class FacultyRegistrationServlet extends HttpServlet {
 	private MarksService marksService;
 
 	public void init() throws ServletException {
-		this.registrationService = (RegistrationService) getServletContext()
-				.getAttribute("RegistrationService");
-		this.marksService = (MarksService) getServletContext().getAttribute(
-				"MarksService");
+		this.registrationService = (RegistrationService) getServletContext().getAttribute("RegistrationService");
+		this.marksService = (MarksService) getServletContext().getAttribute("MarksService");
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String message = "";
-
 		if (request.getParameter("message").equals(BLOCKED_PARAM)) {
 			message = "You can not apply<br> You are blocked by the administrator";
 		} else if (request.getParameter("message").equals(CLOSED_PARAM)) {
@@ -53,56 +50,31 @@ public class FacultyRegistrationServlet extends HttpServlet {
 		} else if (request.getParameter("message").equals(MARKS_PARAM)) {
 			message = "You can not apply, while marks is not filled";
 			request.setAttribute("message", message);
-			request.getRequestDispatcher("DisplayMarks").forward(request,
-					response);
+			request.getRequestDispatcher(Urls.DISPLAY_MARKS_SERVLET).forward(request, response);
 		}
-
 		request.setAttribute("message", message);
-		request.getRequestDispatcher("DisplayFaculties").forward(request,
-				response);
+		request.getRequestDispatcher(Urls.DISPLAY_FACULTIES_SERVLET).forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		long userId = Long.parseLong(request.getParameter("userId"));
 		long facultyId = Long.parseLong(request.getParameter("facultyId"));
-
 		if (registrationService.isEnrolleeBlocked(userId)) {
-			response.sendRedirect(response
-					.encodeRedirectURL("FacultyRegistration?message="
-							+ BLOCKED_PARAM));
-			return;
+			response.sendRedirect(response.encodeRedirectURL(Urls.FACULTY_REGISTRATION_SERVLET + "?message="	+ BLOCKED_PARAM));
+		} else if (!marksService.isMarksExist(userId)) {
+			response.sendRedirect(response.encodeRedirectURL(Urls.FACULTY_REGISTRATION_SERVLET + "?message="	+ MARKS_PARAM));
+		} else if (registrationService.isFacultyClosed(facultyId)) {
+			response.sendRedirect(response.encodeRedirectURL(Urls.FACULTY_REGISTRATION_SERVLET + "?message="	+ CLOSED_PARAM));
+		} else if (registrationService.isRegistrationRecordExist(userId, facultyId)) {
+			response.sendRedirect(response.encodeRedirectURL(Urls.FACULTY_REGISTRATION_SERVLET + "?message="	+ WARNING_PARAM));
+		} else {
+			registrationService.addRegistrationRecord(userId, facultyId);
+			response.sendRedirect(response.encodeRedirectURL(Urls.FACULTY_REGISTRATION_SERVLET + "?message=" + SUCCESS_PARAM));
 		}
-
-		if (!marksService.isMarksExist(userId)) {
-			response.sendRedirect(response
-					.encodeRedirectURL("FacultyRegistration?message="
-							+ MARKS_PARAM));
-			return;
-		}
-
-		if (registrationService.isFacultyClosed(facultyId)) {
-			response.sendRedirect(response
-					.encodeRedirectURL("FacultyRegistration?message="
-							+ CLOSED_PARAM));
-			return;
-		}
-
-		if (registrationService.isRegistrationRecordExist(userId, facultyId)) {
-			response.sendRedirect(response
-					.encodeRedirectURL("FacultyRegistration?message="
-							+ WARNING_PARAM));
-			return;
-		}
-
-		registrationService.addRegistrationRecord(userId, facultyId);
-		response.sendRedirect(response
-				.encodeRedirectURL("FacultyRegistration?message="
-						+ SUCCESS_PARAM));
 	}
 
 }

@@ -13,6 +13,61 @@
     <listener-class>ua.nure.zhabin.SelectionCommittee.listener.ContextListener</listener-class>
   </listener>
   <filter>
+    <filter-name>AccessFilter</filter-name>
+    <filter-class>ua.nure.zhabin.SelectionCommittee.filter.AccessFilter</filter-class>
+    <init-param>
+      <param-name>adminDeniedUri</param-name>
+      <param-value>
+      	/DisplayFacultiesPage.jsp 	
+      	/DisplayRegistrationsPage.jsp      	
+      	/MarksPage.jsp
+      	/DisplayMarks
+      	/DisplayRegistrations
+      	/FacultyRegistration
+      	/Marks
+      </param-value>
+    </init-param>
+    <init-param>
+      <param-name>enrolleesDeniedUri</param-name>
+      <param-value>
+      	/AdminAddFacultyPage.jsp
+      	/AdminDisplayFacultiesPage.jsp
+      	/AdminEditFacultyPage.jsp
+      	/AdminRegisterPage.jsp
+      	/AddFaculty
+      	/DeleteFaculty
+      	/Register
+      	/UpdateFaculty
+      </param-value>
+    </init-param>
+    <init-param>
+      <param-name>commonsDeniedUri</param-name>
+      <param-value>     
+      	/AdminAddFacultyPage.jsp
+      	/AdminDisplayFacultiesPage.jsp
+      	/AdminEditFacultyPage.jsp
+      	/AdminRegisterPage.jsp
+      	/DisplayFacultiesPage.jsp 	
+      	/DisplayRegistrationsPage.jsp      	
+      	/MarksPage.jsp
+      	/AddFaculty
+      	/DeleteFaculty
+      	/DisplayFaculties
+      	/DisplayMarks
+      	/DisplayRegistrations
+      	/FacultyRegistration
+      	/Faculty
+      	/Marks
+      	/Register
+      	/UpdateFaculty
+      </param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>AccessFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>  
+  <filter>
     <filter-name>EncodingFilter</filter-name>
     <filter-class>ua.nure.zhabin.SelectionCommittee.filter.EncodingFilter</filter-class>
     <init-param>
@@ -32,11 +87,11 @@
     <filter-name>LocaleFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
   <error-page>
     <exception-type>ua.nure.zhabin.SelectionCommittee.exception.DbConnectionException</exception-type>
     <location>/NoConnectionError.jsp</location>
   </error-page>
-  <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
 </web-app>

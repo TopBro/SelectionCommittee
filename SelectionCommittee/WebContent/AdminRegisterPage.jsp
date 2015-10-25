@@ -91,7 +91,7 @@
 									</div>
 								</c:forEach>
 								<br>
-								<form action="Faculty" method="post">
+								<form action="#">
 									<div class="row">
 										<div class="12u">
 											<ul class="buttons">

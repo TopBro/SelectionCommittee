@@ -12,8 +12,8 @@ import org.apache.log4j.Logger;
 
 import ua.nure.zhabin.SelectionCommittee.db.Fields;
 import ua.nure.zhabin.SelectionCommittee.db.entity.Faculty;
-import ua.nure.zhabin.SelectionCommittee.db.entity.User;
 import ua.nure.zhabin.SelectionCommittee.service.FacultiesService;
+import ua.nure.zhabin.SelectionCommittee.util.Urls;
 import ua.nure.zhabin.SelectionCommittee.validator.FacultyValidator;
 import ua.nure.zhabin.SelectionCommittee.validator.Validator;
 
@@ -29,33 +29,18 @@ public class AddFacultyServlet extends HttpServlet {
 	private Validator<Faculty> validator;
 
 	public void init() throws ServletException {
-		this.facutiesService = (FacultiesService) getServletContext()
-				.getAttribute("FacutiesService");
-		this.validator = (FacultyValidator) getServletContext().getAttribute(
-				"FacultyValidator");
+		this.facutiesService = (FacultiesService) getServletContext().getAttribute("FacutiesService");
+		this.validator = (FacultyValidator) getServletContext().getAttribute("FacultyValidator");
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		User user = (User) request.getSession().getAttribute("CurrentUser");
-		String message;
-
-		if (user == null || user.getRoleId() != Fields.ADMIN_ROLE) {
-			message = "Your session has expired.<br>Enter your login<br>and password to log in.";
-			request.setAttribute("loginMessage", message);
-			request.getRequestDispatcher("index.jsp")
-					.forward(request, response);
-			return;
-		}
-
-		message = "Faculty has been added";
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String message = "Faculty has been added";
 		request.setAttribute("message", message);
-		request.getRequestDispatcher("DisplayFaculties").forward(request,
-				response);
+		request.getRequestDispatcher(Urls.DISPLAY_FACULTIES_SERVLET).forward(request, response);
 	}
 
 	/**
@@ -92,7 +77,7 @@ public class AddFacultyServlet extends HttpServlet {
 		}
 
 		facutiesService.add(faculty);
-		response.sendRedirect(response.encodeRedirectURL("AddFaculty"));
+		response.sendRedirect(response.encodeRedirectURL(Urls.ADD_FACULTY_SERVLET));
 	}
 
 	private void forwardToAddFacultyPage(HttpServletRequest request,
@@ -102,8 +87,7 @@ public class AddFacultyServlet extends HttpServlet {
 		request.setAttribute("message", message);
 		request.setAttribute("faculty", faculty);
 
-		request.getRequestDispatcher("WEB-INF/AdminAddFacultyPage.jsp")
-				.forward(request, response);
+		request.getRequestDispatcher(Urls.ADMIN_ADD_FACULTY_PAGE).forward(request, response);
 
 	}
 
@@ -111,10 +95,8 @@ public class AddFacultyServlet extends HttpServlet {
 		Faculty faculty = new Faculty();
 		faculty.setName(request.getParameter(Fields.FACULTY_NAME));
 		try {
-			faculty.setBudget(Integer.parseInt(request
-					.getParameter(Fields.FACULTY_BUDGET)));
-			faculty.setTotal(Integer.parseInt(request
-					.getParameter(Fields.FACULTY_TOTAL)));
+			faculty.setBudget(Integer.parseInt(request.getParameter(Fields.FACULTY_BUDGET)));
+			faculty.setTotal(Integer.parseInt(request.getParameter(Fields.FACULTY_TOTAL)));
 		} catch (NumberFormatException e) {
 			LOG.warn("Cannot parse marks data.");
 			return null;

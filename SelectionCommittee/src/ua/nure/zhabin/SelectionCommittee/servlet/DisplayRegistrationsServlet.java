@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import ua.nure.zhabin.SelectionCommittee.db.entity.RegistrationRecord;
 import ua.nure.zhabin.SelectionCommittee.db.entity.User;
 import ua.nure.zhabin.SelectionCommittee.service.RegistrationService;
+import ua.nure.zhabin.SelectionCommittee.util.Urls;
 
 /**
  * Servlet implementation class DisplayRegistrationsServlet
@@ -23,40 +24,22 @@ public class DisplayRegistrationsServlet extends HttpServlet {
 	RegistrationService registrationService;
 
 	public void init() throws ServletException {
-		this.registrationService = (RegistrationService) getServletContext()
-				.getAttribute("RegistrationService");
+		this.registrationService = (RegistrationService) getServletContext().getAttribute("RegistrationService");
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = (User) request.getSession().getAttribute("CurrentUser");
-
-		if (user == null) {
-			String message = "Your session has expired.<br>Enter your login<br>and password to log in.";
-			request.setAttribute("loginMessage", message);
-			request.getRequestDispatcher("index.jsp")
-					.forward(request, response);
-			return;
-		}
-
-		List<RegistrationRecord> registrations = registrationService
-				.getAllByUserId(user.getId());
-
+		List<RegistrationRecord> registrations = registrationService.getAllByUserId(user.getId());
 		if (registrations.size() == 0) {
 			String message = "You did not make any registrations";
 			request.setAttribute("message", message);
-			request.getRequestDispatcher("DisplayRegistrationsPage.jsp")
-					.forward(request, response);
-			return;
 		}
-
 		request.setAttribute("registrations", registrations);
-		request.getRequestDispatcher("DisplayRegistrationsPage.jsp").forward(
-				request, response);
+		request.getRequestDispatcher(Urls.DISPLAY_REGISTRATIONS_PAGE).forward(request, response);
 	}
 
 	/**

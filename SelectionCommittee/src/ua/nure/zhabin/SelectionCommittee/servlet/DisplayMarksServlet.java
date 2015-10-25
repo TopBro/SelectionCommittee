@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import ua.nure.zhabin.SelectionCommittee.bean.MarksBean;
 import ua.nure.zhabin.SelectionCommittee.db.entity.User;
 import ua.nure.zhabin.SelectionCommittee.service.MarksService;
+import ua.nure.zhabin.SelectionCommittee.util.Urls;
 
 /**
  * Servlet implementation class DisplayMarksServlet
@@ -26,16 +27,14 @@ public class DisplayMarksServlet extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init() throws ServletException {
-		this.marksService = (MarksService) getServletContext().getAttribute(
-				"MarksService");
+		this.marksService = (MarksService) getServletContext().getAttribute("MarksService");
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		displayMarks(request, response);
 	}
 
@@ -43,29 +42,16 @@ public class DisplayMarksServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		displayMarks(request, response);
 	}
 
-	private void displayMarks(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	private void displayMarks(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = (User) request.getSession().getAttribute("CurrentUser");
-
-		if (user == null) {
-			String message = "Your session has expired.<br>Enter your login<br>and password to log in.";
-			request.setAttribute("loginMessage", message);
-			request.getRequestDispatcher("index.jsp")
-					.forward(request, response);
-			return;
-		}
-
 		if (marksService.isMarksExist(user.getId())) {
 			MarksBean marksBean = marksService.getMarks(user.getId());
 			request.setAttribute("marksBean", marksBean);
 		}
-
-		request.getRequestDispatcher("MarksPage.jsp")
-				.forward(request, response);
+		request.getRequestDispatcher(Urls.MARKS_PAGE).forward(request, response);
 	}
 }

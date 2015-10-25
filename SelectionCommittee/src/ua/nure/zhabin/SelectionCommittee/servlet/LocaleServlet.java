@@ -30,11 +30,9 @@ public class LocaleServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SessionLocaleContainer localeContainer = new SessionLocaleContainer();
 		Locale locale;
-
 		if (request.getParameter(LANGUAGE_PARAM).equals(ENGLISH_LANGUAGE)) {
 			locale = new Locale(ENGLISH_LANGUAGE);
 			LOG.info("Created english locale.");
@@ -42,18 +40,16 @@ public class LocaleServlet extends HttpServlet {
 			locale = new Locale(RUSSIAN_LANGUAGE);
 			LOG.info("Created russian locale.");
 		}
-
 		localeContainer.saveLocale(request, response, locale);
 		LOG.info("Locale saved in locale container.");
-		response.sendRedirect(request.getHeader("referer"));
+		response.sendRedirect(response.encodeRedirectURL(request.getHeader("referer")));
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
