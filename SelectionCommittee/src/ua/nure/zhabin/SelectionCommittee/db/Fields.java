@@ -15,6 +15,9 @@ public final class Fields {
 	public static final int BLOCKED_STATE = 2;
 
 	public static final int REGISTRATION_STATUS_WAITING = 1;
+	public static final int REGISTRATION_STATUS_BUDGET = 2;
+	public static final int REGISTRATION_STATUS_CONTRACT = 3;
+	public static final int REGISTRATION_STATUS_NOT_ENROLLED = 4;
 
 	public static final int FACULTY_OPEN = 1;
 	public static final int FACULTY_CLOSED = 2;

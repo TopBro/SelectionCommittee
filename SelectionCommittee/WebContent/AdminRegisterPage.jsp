@@ -45,10 +45,11 @@
 									</div>
 								</c:forEach>
 								<br>
-								<form action="#">
+								<form action="CloseRegister" method="post">
+								<input type="hidden" name="faculty_id" value="${faculty_id}"/>
 									<div class="row">
 										<div class="12u">
-											<ul class="buttons">
+											<ul class="buttons">												
 												<li><input class="button" type="submit" value="<fmt:message key="close_register"/>"></li>
 											</ul>
 										</div>

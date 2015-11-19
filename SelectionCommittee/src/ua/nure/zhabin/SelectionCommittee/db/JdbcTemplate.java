@@ -17,8 +17,7 @@ public class JdbcTemplate<E> {
 
 	private static final Logger LOG = Logger.getLogger(JdbcTemplate.class);
 
-	public List<E> getAll(Connection connection, String sql, Object[] arr,
-			Mapper<E> mapper) {
+	public List<E> getAll(Connection connection, String sql, Object[] arr, Mapper<E> mapper) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		List<E> list = new ArrayList<>();
@@ -34,8 +33,7 @@ public class JdbcTemplate<E> {
 			}
 		} catch (SQLException e) {
 			LOG.error("Cannot obtain objects!", e);
-			MysqlRepositoryException mre = new MysqlRepositoryException(
-					e.getMessage());
+			MysqlRepositoryException mre = new MysqlRepositoryException(e.getMessage());
 			mre.initCause(e);
 			throw mre;
 		} finally {
@@ -45,8 +43,7 @@ public class JdbcTemplate<E> {
 		return list;
 	}
 
-	public E get(Connection connection, String sql, Object[] arr,
-			Mapper<E> mapper) {
+	public E get(Connection connection, String sql, Object[] arr, Mapper<E> mapper) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		E object = null;
@@ -61,8 +58,7 @@ public class JdbcTemplate<E> {
 			}
 		} catch (SQLException e) {
 			LOG.error("Cannot obtain object!", e);
-			MysqlRepositoryException mre = new MysqlRepositoryException(
-					e.getMessage());
+			MysqlRepositoryException mre = new MysqlRepositoryException(e.getMessage());
 			mre.initCause(e);
 			throw mre;
 		} finally {
@@ -82,8 +78,7 @@ public class JdbcTemplate<E> {
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			LOG.error("Cannot update object!", e);
-			MysqlRepositoryException mre = new MysqlRepositoryException(
-					e.getMessage());
+			MysqlRepositoryException mre = new MysqlRepositoryException(e.getMessage());
 			mre.initCause(e);
 			throw mre;
 		} finally {
@@ -96,8 +91,7 @@ public class JdbcTemplate<E> {
 		ResultSet rs = null;
 		long key = 0;
 		try {
-			ps = connection.prepareStatement(sql,
-					PreparedStatement.RETURN_GENERATED_KEYS);
+			ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			for (int i = 0; i < arr.length; i++) {
 				ps.setObject(i + 1, arr[i]);
 			}
@@ -108,8 +102,7 @@ public class JdbcTemplate<E> {
 			}
 		} catch (SQLException e) {
 			LOG.error("Cannot create user!", e);
-			MysqlRepositoryException mre = new MysqlRepositoryException(
-					e.getMessage());
+			MysqlRepositoryException mre = new MysqlRepositoryException(e.getMessage());
 			mre.initCause(e);
 			throw mre;
 		} finally {

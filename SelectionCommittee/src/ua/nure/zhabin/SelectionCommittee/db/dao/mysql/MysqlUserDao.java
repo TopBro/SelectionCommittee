@@ -21,19 +21,16 @@ public class MysqlUserDao implements UserDao {
 
 	@Override
 	public User get(long id, Connection connection) {
-		return jdbcTemplate.get(connection, GET_USER_BY_ID,
-				new Object[] { id }, new UserMapper());
+		return jdbcTemplate.get(connection, GET_USER_BY_ID,	new Object[] { id }, new UserMapper());
 	}
 
 	@Override
 	public User get(String login, Connection connection) {
-		return jdbcTemplate.get(connection, GET_USER_BY_LOGIN,
-				new Object[] { login }, new UserMapper());
+		return jdbcTemplate.get(connection, GET_USER_BY_LOGIN, new Object[] { login }, new UserMapper());
 	}
 
 	@Override
 	public long add(User user, Connection connection) {
-		return jdbcTemplate.createUser(connection, ADD_USER, new Object[] {
-				user.getLogin(), user.getPassword(), user.getRoleId() });
+		return jdbcTemplate.createUser(connection, ADD_USER, new Object[] {user.getLogin(), user.getPassword(), user.getRoleId()});
 	}
 }

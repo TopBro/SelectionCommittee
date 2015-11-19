@@ -57,10 +57,8 @@ public class ContextListener implements ServletContextListener {
 		RegisterDao registerDao = new MysqlRegisterDao();
 
 		UserService userService = new UserService(userDao, enrolleeDao);
-		MarksService marksService = new MarksService(vnoMarksDao,
-				certificateMarksDao);
-		RegistrationService registrationService = new RegistrationService(
-				registrationDao, enrolleeDao, facultyDao, registerDao);
+		MarksService marksService = new MarksService(vnoMarksDao, certificateMarksDao);
+		RegistrationService registrationService = new RegistrationService(registrationDao, enrolleeDao, facultyDao, registerDao);
 		FacultiesService facutiesService = new FacultiesService(facultyDao);
 
 		Validator<SignupBean> signupBeanValidator = new SignupBeanValidator();
@@ -69,16 +67,11 @@ public class ContextListener implements ServletContextListener {
 
 		event.getServletContext().setAttribute("UserService", userService);
 		event.getServletContext().setAttribute("MarksService", marksService);
-		event.getServletContext().setAttribute("RegistrationService",
-				registrationService);
-		event.getServletContext().setAttribute("FacutiesService",
-				facutiesService);
-		event.getServletContext().setAttribute("SignupBeanValidator",
-				signupBeanValidator);
-		event.getServletContext().setAttribute("MarksBeanValidator",
-				marksBeanValidator);
-		event.getServletContext().setAttribute("FacultyValidator",
-				facultyValidator);
+		event.getServletContext().setAttribute("RegistrationService", registrationService);
+		event.getServletContext().setAttribute("FacutiesService", facutiesService);
+		event.getServletContext().setAttribute("SignupBeanValidator", signupBeanValidator);
+		event.getServletContext().setAttribute("MarksBeanValidator", marksBeanValidator);
+		event.getServletContext().setAttribute("FacultyValidator", facultyValidator);
 
 		log("Servlet context initialization finished");
 	}

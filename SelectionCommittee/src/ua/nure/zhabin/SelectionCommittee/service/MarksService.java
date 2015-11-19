@@ -20,8 +20,7 @@ public class MarksService {
 	private MarksDao<VnoMarks> vnoMarksDao;
 	private MarksDao<CertificateMarks> certificateMarksDao;
 
-	public MarksService(MarksDao<VnoMarks> vnoMarksDao,
-			MarksDao<CertificateMarks> certificateMarksDao) {
+	public MarksService(MarksDao<VnoMarks> vnoMarksDao,	MarksDao<CertificateMarks> certificateMarksDao) {
 		this.vnoMarksDao = vnoMarksDao;
 		this.certificateMarksDao = certificateMarksDao;
 	}
@@ -35,11 +34,9 @@ public class MarksService {
 		Connection con = DbManager.getConnection();
 		MarksBean marksBean = new MarksBean();
 		VnoMarks vnoMarks = vnoMarksDao.get(userId, con);
-		CertificateMarks certificateMarks = certificateMarksDao
-				.get(userId, con);
+		CertificateMarks certificateMarks = certificateMarksDao.get(userId, con);
 		marksBean = MarksBeanHandler.mapVnoMarks(marksBean, vnoMarks);
-		marksBean = MarksBeanHandler.mapCertificateMarks(marksBean,
-				certificateMarks);
+		marksBean = MarksBeanHandler.mapCertificateMarks(marksBean,	certificateMarks);
 		return marksBean;
 	}
 
@@ -47,8 +44,7 @@ public class MarksService {
 		Connection con = DbManager.getConnection();
 		try {
 			VnoMarks vnoMarks = MarksBeanHandler.extractVnoMarks(marksBean);
-			CertificateMarks certificateMarks = MarksBeanHandler
-					.extractCertificateMarks(marksBean);
+			CertificateMarks certificateMarks = MarksBeanHandler.extractCertificateMarks(marksBean);
 			vnoMarks.setUserId(userId);
 			certificateMarks.setUserId(userId);
 			vnoMarksDao.add(vnoMarks, con);
@@ -67,8 +63,7 @@ public class MarksService {
 		Connection con = DbManager.getConnection();
 		try {
 			VnoMarks vnoMarks = MarksBeanHandler.extractVnoMarks(marksBean);
-			CertificateMarks certificateMarks = MarksBeanHandler
-					.extractCertificateMarks(marksBean);
+			CertificateMarks certificateMarks = MarksBeanHandler.extractCertificateMarks(marksBean);
 			vnoMarks.setUserId(userId);
 			certificateMarks.setUserId(userId);
 			vnoMarksDao.update(vnoMarks, con);

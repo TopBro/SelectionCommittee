@@ -14,10 +14,8 @@ public class RegisterRecordMapper implements Mapper<RegisterRecordBean> {
 		registerRecordBean.setUserId(rs.getLong(Fields.USER_ID));
 		registerRecordBean.setFacultyId(rs.getLong(Fields.FACULTY_ID));
 		registerRecordBean.setLastName(rs.getString(Fields.ENROLLEE_LAST_NAME));
-		registerRecordBean.setFirstName(rs
-				.getString(Fields.ENROLLEE_FIRST_NAME));
-		registerRecordBean.setMiddleName(rs
-				.getString(Fields.ENROLLEE_MIDDLE_NAME));
+		registerRecordBean.setFirstName(rs.getString(Fields.ENROLLEE_FIRST_NAME));
+		registerRecordBean.setMiddleName(rs.getString(Fields.ENROLLEE_MIDDLE_NAME));
 		registerRecordBean.setVnoSum(rs.getInt(6));
 		return registerRecordBean;
 	}

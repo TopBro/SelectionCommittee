@@ -7,7 +7,7 @@ import ua.nure.zhabin.SelectionCommittee.bean.RegisterRecordBean;
 
 public interface RegisterDao {
 
-	List<RegisterRecordBean> getAllByFacultyId(long facultyId,
-			Connection connection);
+	List<RegisterRecordBean> getActiveByFacultyId(long facultyId, Connection connection);
+	List<RegisterRecordBean> getAllByFacultyId(long facultyId, Connection connection);
 
 }
