@@ -7,7 +7,7 @@
   </context-param>
   <context-param>
     <param-name>DefaultLocale</param-name>
-    <param-value>ru</param-value>
+    <param-value>en</param-value>
   </context-param>
   <listener>
     <listener-class>ua.nure.zhabin.SelectionCommittee.listener.ContextListener</listener-class>
