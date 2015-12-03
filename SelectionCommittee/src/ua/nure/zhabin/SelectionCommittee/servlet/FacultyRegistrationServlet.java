@@ -51,6 +51,7 @@ public class FacultyRegistrationServlet extends HttpServlet {
 			message = "You can not apply, while marks is not filled";
 			request.setAttribute("message", message);
 			request.getRequestDispatcher(Urls.DISPLAY_MARKS_SERVLET).forward(request, response);
+			return;
 		}
 		request.setAttribute("message", message);
 		request.getRequestDispatcher(Urls.DISPLAY_FACULTIES_SERVLET).forward(request, response);
